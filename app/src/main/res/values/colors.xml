@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // app colors
-    <color name="colorPrimary">#6200ee</color>
-    <color name="colorPrimaryVariant">#3700b3</color>
-    <color name="colorAccent">#03dac6</color>
-    <color name="colorAccentVariant">#018786</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryLight">#BBDEFB</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#4CAF50</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
 
     // common colors
     <color name="White">#FFFFFF</color>

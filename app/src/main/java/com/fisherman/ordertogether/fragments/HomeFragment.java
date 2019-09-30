@@ -9,9 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.fisherman.ordertogether.R;
+
 public class HomeFragment extends Fragment {
 
     private View mView;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -21,7 +24,10 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        mView = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        return mView;
     }
 
 }

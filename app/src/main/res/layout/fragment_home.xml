@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/fragment_border_padding"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="top">
+        android:background="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:id="@+id/til_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fragment_border_padding"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/img_btn_add_new_item"
+            android:hint="Enter item">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-    </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/img_btn_add_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/add"/>
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_between_components_vertical"
-        android:layout_weight="1"
-        android:background="@color/LightGrey">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,13 +57,14 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/fragment_border_padding"
         android:layout_marginTop="@dimen/spacing_between_components_vertical"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryLight"
         android:layout_gravity="bottom">
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/confirm"
-            />
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/confirm" />
+
     </FrameLayout>
 </LinearLayout>

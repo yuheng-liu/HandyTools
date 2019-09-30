@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+
+<!--        <item-->
+<!--            android:id="@+id/navigation"-->
+<!--            android:icon="@drawable/ic_android_black_24dp"-->
+<!--            android:title="Navigation" />-->
+
+<!--        <item-->
+<!--            android:id="@+id/view_model"-->
+<!--            android:icon="@drawable/ic_attach_money_black_24dp"-->
+<!--            android:title="View Model" />-->
+
+<!--        <item-->
+<!--            android:id="@+id/broadcast_receiver"-->
+<!--            android:icon="@drawable/ic_save_black_24dp"-->
+<!--            android:title="Broadcast Receiver" />-->
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+
+<!--        <item-->
+<!--            android:id="@+id/facebook_google"-->
+<!--            android:icon="@drawable/ic_add_black_24dp"-->
+<!--            android:title="Facebook/Google" />-->
+<!--        <item-->
+<!--            android:id="@+id/fifth"-->
+<!--            android:icon="@drawable/ic_forward_black_24dp"-->
+<!--            android:title="5" />-->
+    </group>
+</menu>

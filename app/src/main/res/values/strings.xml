@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">OrderTogether</string>
     <string name="confirm">Confirm</string>
+
+    <!-- common words -->
+    <string name="add">add</string>
+
 </resources>
