@@ -5,20 +5,17 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
 
-<!--        <item-->
-<!--            android:id="@+id/navigation"-->
-<!--            android:icon="@drawable/ic_android_black_24dp"-->
-<!--            android:title="Navigation" />-->
+        <item
+            android:id="@+id/navigation"
+            android:title="1" />
 
-<!--        <item-->
-<!--            android:id="@+id/view_model"-->
-<!--            android:icon="@drawable/ic_attach_money_black_24dp"-->
-<!--            android:title="View Model" />-->
+        <item
+            android:id="@+id/view_model"
+            android:title="2" />
 
-<!--        <item-->
-<!--            android:id="@+id/broadcast_receiver"-->
-<!--            android:icon="@drawable/ic_save_black_24dp"-->
-<!--            android:title="Broadcast Receiver" />-->
+        <item
+            android:id="@+id/broadcast_receiver"
+            android:title="3" />
 
     </group>
 
@@ -26,13 +23,11 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
 
-<!--        <item-->
-<!--            android:id="@+id/facebook_google"-->
-<!--            android:icon="@drawable/ic_add_black_24dp"-->
-<!--            android:title="Facebook/Google" />-->
-<!--        <item-->
-<!--            android:id="@+id/fifth"-->
-<!--            android:icon="@drawable/ic_forward_black_24dp"-->
-<!--            android:title="5" />-->
+        <item
+            android:id="@+id/facebook_google"
+            android:title="4" />
+        <item
+            android:id="@+id/fifth"
+            android:title="5" />
     </group>
 </menu>
