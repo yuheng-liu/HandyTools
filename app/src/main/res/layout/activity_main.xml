@@ -27,7 +27,7 @@
     </LinearLayout>
 
     <!--for drawer view, to populate it with items, recommended to
-    use this for better compatibility with navigation compoenent-->
+    use this for better compatibility with navigation component-->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"

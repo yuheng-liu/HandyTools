@@ -11,13 +11,14 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity(),
-    NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     private var toolbar: Toolbar? = null
     private var drawerLayout: DrawerLayout? = null
     private var navController: NavController? = null
     private var navigationView: NavigationView? = null
     private val snackbar: Snackbar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,16 +29,14 @@ class MainActivity : AppCompatActivity(),
         toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigationView)
+
         // toolbar setup
         setSupportActionBar(toolbar)
-        //        getSupportActionBar().setIcon(R.drawable.ic_android_black_24dp);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-// navController setup
+
+        // navController setup
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController!!, drawerLayout)
 //        NavigationUI.setupWithNavController(navigationView, navController!!)
-//        navigationView.setNavigationItemSelectedListener(this)
     }
 
     override fun onStart() {
