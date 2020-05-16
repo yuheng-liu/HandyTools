@@ -4,67 +4,55 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
-    private var toolbar: Toolbar? = null
-    private var drawerLayout: DrawerLayout? = null
-    private var navController: NavController? = null
-    private var navigationView: NavigationView? = null
-    private val snackbar: Snackbar? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setupNavigation()
+        setupListeners()
     }
 
     private fun setupNavigation() { // attaching view components to view variables
-        toolbar = findViewById(R.id.toolbar)
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.navigationView)
-
         // toolbar setup
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)    //
+        supportActionBar?.setDisplayShowHomeEnabled(true)   // show the home button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)   // enable home button to become an up button
 
         // navController setup
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController!!, drawerLayout)
-//        NavigationUI.setupWithNavController(navigationView, navController!!)
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        NavigationUI.setupWithNavController(navigationView, navController)
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun setupListeners() {
+        navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                // TODO add more navigation destinations here
+                else -> true
+            }
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
+    override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, drawerLayout)
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        item.isChecked = true
-        drawerLayout!!.closeDrawers()
-        val id = item.itemId
-        //        switch (id) {
-//            case R.id.navigation:
-////                navController.navigate(R.id.navigationFragment);
-//                break;
-//            case R.id.view_model:
-////                navController.navigate(R.id.viewModelFragment);
-//                break;
-//            case R.id.broadcast_receiver:
-////                navController.navigate(R.id.broadcastReceiverFragment);
-//                break;
-//            case R.id.facebook_google:
-////                navController.navigate(R.id.socialLoginFragment);
-//                break;
-//        }
-        return true
+    override fun onBackPressed() {
+        when (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            true -> drawerLayout.closeDrawer(GravityCompat.START)
+            false -> super.onBackPressed()
+        }
     }
 }
