@@ -13,33 +13,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.liuyuheng.common.internal.GlideApp
 
-fun View.visible() {
-    visibility = View.VISIBLE
-}
-
-fun View.gone() {
-    visibility = View.GONE
-}
-
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-fun AlertDialog.showIfHidden() {
-    if (!this.isShowing) show()
-}
-
-fun AlertDialog.hideIfShown() {
-    if (this.isShowing) hide()
-}
-
-fun Activity.showToast(msg: String) {
-    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-}
-
-fun Fragment.showToast(msg: String) {
-    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-}
+fun View.visible() { visibility = View.VISIBLE }
+fun View.gone() { visibility = View.GONE }
+fun View.invisible() { visibility = View.INVISIBLE }
+fun AlertDialog.showIfHidden() { if (!this.isShowing) show() }
+fun AlertDialog.hideIfShown() { if (this.isShowing) hide() }
+fun Activity.showToast(msg: String) { Toast.makeText(this, msg, Toast.LENGTH_SHORT).show() }
+fun Fragment.showToast(msg: String) { Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show() }
 
 // for modifying portions of text to clickable links, using xml annotations to prevent breaking after localizations
 // requires the string to be modified in strings.xml to be enclosed in <annotation> tags
