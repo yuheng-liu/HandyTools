@@ -8,14 +8,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/fragment_border_padding"
+        android:padding="@dimen/default_margin_padding"
         android:background="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_new_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fragment_border_padding"
+            android:layout_marginEnd="@dimen/default_margin_padding"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/img_btn_add_new_item"
             android:hint="Enter item">
@@ -41,7 +41,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_between_components_vertical"
+        android:layout_marginTop="4dp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -55,8 +55,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/fragment_border_padding"
-        android:layout_marginTop="@dimen/spacing_between_components_vertical"
+        android:padding="@dimen/default_margin_padding"
+        android:layout_marginTop="4dp"
         android:background="@color/colorPrimaryLight"
         android:layout_gravity="bottom">
 

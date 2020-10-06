@@ -2,13 +2,67 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+
         <!-- App colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+<!--        <item name="colorOnPrimary"></item>-->
+<!--        <item name="colorPrimaryVariant"></item>-->
+<!--        <item name="colorSecondary"></item>-->
+<!--        <item name="colorOnSecondary"></item>-->
+<!--        <item name="colorSecondaryVariant"></item>-->
+        <item name="colorSurface">@color/white</item>
+<!--        <item name="colorOnSurface"></item>-->
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">@color/red</item>
+        <item name="android:colorBackground">@color/silver</item>
+<!--        <item name="colorControlNormal"></item>-->
+<!--        <item name="colorControlActivated"></item>-->
+<!--        <item name="colorControlHighlight"></item>-->
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/white</item>
 
-        <!-- Font -->
+        <!-- Dimensions -->
+        <!-- standard (min) height for list items -->
+<!--        <item name="listPreferredItemHeight"></item>-->
+<!--        <item name="actionBarSize"></item>-->
+
+        <!-- Font/Text -->
         <item name="android:fontFamily">sans-serif</item>
+<!--        <item name="textAppearanceHeadline1"></item> &lt;!&ndash; light 96sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceHeadline2"></item> &lt;!&ndash; light 60sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceHeadline3"></item> &lt;!&ndash; regular 48sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceHeadline4"></item> &lt;!&ndash; regular 34sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceHeadline5"></item> &lt;!&ndash; regular 24sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceHeadline6"></item> &lt;!&ndash; medium 20sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceSubtitle1"></item> &lt;!&ndash; regular 16sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceSubtitle2"></item> &lt;!&ndash; medium 14sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceBody1"></item> &lt;!&ndash; regular 16sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceBody2"></item> &lt;!&ndash; regular 14sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceCaption"></item> &lt;!&ndash; regular 12sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceButton"></item> &lt;!&ndash; medium all caps 14sp text &ndash;&gt;-->
+<!--        <item name="textAppearanceOverline"></item> &lt;!&ndash; regular all caps 10sp text &ndash;&gt;-->
+
+        <!-- Shapes -->
+<!--        <item name="shapeAppearanceSmallComponent"></item> &lt;!&ndash; buttons/chips/textFields/etc, rounded 4 dp corners &ndash;&gt;-->
+<!--        <item name="shapeAppearanceMediumComponent"></item> &lt;!&ndash; cards/dialogs/datePickers/etc, rounded 4 dp corners &ndash;&gt;-->
+<!--        <item name="shapeAppearanceLargeComponent"></item> &lt;!&ndash; bottomSheets/etc, rounded 0 dp corners (its a square) &ndash;&gt;-->
+
+        <!-- Widgets -->
+        <item name="materialButtonStyle">@style/AppTheme.Button</item> <!-- defaults to contained -->
+<!--        <item name="borderlessButtonStyle"></item>  -->
+        <item name="materialButtonOutlinedStyle">@style/AppTheme.OutlinedButton</item>
+
+    </style>
+
+    <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="AppTheme.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/selector_outlined_button_toggle_bg_color</item>
+        <item name="android:textColor">@color/selector_outlined_button_toggle_text_color</item>
+        <item name="strokeColor">?colorAccent</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
 </resources>

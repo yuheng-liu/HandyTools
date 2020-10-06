@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--popupTheme for options menu, while theme is for action bar-->
-<androidx.appcompat.widget.Toolbar
+<com.google.android.material.appbar.MaterialToolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:id="@+id/toolbar">
-</androidx.appcompat.widget.Toolbar>
+    style="@style/Widget.MaterialComponents.Toolbar.Surface">
+
+</com.google.android.material.appbar.MaterialToolbar>

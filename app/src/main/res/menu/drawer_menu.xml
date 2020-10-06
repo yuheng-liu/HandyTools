@@ -6,31 +6,19 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/navigation"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="1" />
+            android:id="@+id/bill_calculator"
+            android:icon="@drawable/ic_dollar_sign_24dp"
+            android:title="Bill Calculator" />
 
-        <item
-            android:id="@+id/view_model"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="2" />
+<!--        <item-->
+<!--            android:id="@+id/view_model"-->
+<!--            android:icon="@drawable/ic_android_black_24dp"-->
+<!--            android:title="2" />-->
 
-        <item
-            android:id="@+id/broadcast_receiver"
-            android:icon="@drawable/ic_android_black_24dp"
-            android:title="3" />
+<!--        <item-->
+<!--            android:id="@+id/broadcast_receiver"-->
+<!--            android:icon="@drawable/ic_android_black_24dp"-->
+<!--            android:title="3" />-->
 
-    </group>
-
-    <group
-        android:id="@+id/group2"
-        android:checkableBehavior="single">
-
-        <item
-            android:id="@+id/facebook_google"
-            android:title="4" />
-        <item
-            android:id="@+id/fifth"
-            android:title="5" />
     </group>
 </menu>
