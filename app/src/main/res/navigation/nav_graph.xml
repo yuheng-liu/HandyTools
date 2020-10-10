@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/billTypeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/billTypeFragment"
         android:name="com.liuyuheng.handytools.ui.bill.BillTypeFragment"
-        android:label="Bill"
+        android:label="Bill Calculator"
         tools:layout="@layout/fragment_bill_type"/>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.liuyuheng.handytools.ui.HomeFragment"
+        android:label="Welcome to Handy Tools!"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_billTypeFragment"
+            app:destination="@id/billTypeFragment" />
+    </fragment>
 </navigation>

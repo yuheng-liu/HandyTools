@@ -5,10 +5,10 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/bill_calculator"
-            android:icon="@drawable/ic_dollar_sign_24dp"
-            android:title="Bill Calculator" />
+<!--        <item-->
+<!--            android:id="@+id/bill_calculator"-->
+<!--            android:icon="@drawable/ic_dollar_sign_24dp"-->
+<!--            android:title="Bill Calculator" />-->
 
 <!--        <item-->
 <!--            android:id="@+id/view_model"-->
