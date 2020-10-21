@@ -4,4 +4,11 @@
     <string name="add">add</string>
     <string name="confirm">Confirm</string>
     <string name="bill_calculator">Bill Calculator</string>
+    <string name="bill_type">Bill Type:</string>
+    <string name="single_bill">Single Bill</string>
+    <string name="multiple_bills">Multiple Bills</string>
+    <string name="split_type">Split Type:</string>
+    <string name="equally">Equally</string>
+    <string name="differently">Differently</string>
+    <string name="number_of_people">Number Of People:</string>
 </resources>

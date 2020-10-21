@@ -61,7 +61,7 @@
     <style name="AppTheme.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="backgroundTint">@color/selector_outlined_button_toggle_bg_color</item>
         <item name="android:textColor">@color/selector_outlined_button_toggle_text_color</item>
-        <item name="strokeColor">?colorAccent</item>
+        <item name="strokeColor">?colorPrimary</item>
         <item name="cornerRadius">8dp</item>
     </style>
 
