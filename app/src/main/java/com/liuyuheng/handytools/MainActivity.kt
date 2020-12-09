@@ -6,16 +6,17 @@ import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.toolbar.*
+import com.liuyuheng.handytools.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupNavigation()
         setupListeners()
@@ -23,18 +24,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigation() { // attaching view components to view variables
         // toolbar setup
-        setSupportActionBar(toolbar)    // replace action bar with toolbar
+        setSupportActionBar(binding.toolbar.toolbar)    // replace action bar with toolbar
         supportActionBar?.setDisplayShowHomeEnabled(true)   // show the home button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)   // enable home button to become an up button
 
         // navController setup
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-        NavigationUI.setupWithNavController(navigationView, navController)
+        NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)
+        NavigationUI.setupWithNavController(binding.navigationView, navController)
     }
 
     private fun setupListeners() {
-        navigationView.setNavigationItemSelectedListener { item ->
+        binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 // TODO add more navigation destinations here
                 else -> true
@@ -42,11 +43,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, drawerLayout)
+    override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, binding.drawerLayout)
 
     override fun onBackPressed() {
-        when (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            true -> drawerLayout.closeDrawer(GravityCompat.START)
+        when (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            true -> binding.drawerLayout.closeDrawer(GravityCompat.START)
             false -> super.onBackPressed()
         }
     }

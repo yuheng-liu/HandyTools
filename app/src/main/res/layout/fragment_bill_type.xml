@@ -108,4 +108,13 @@
         app:layout_constraintTop_toTopOf="@+id/textView_number_of_people"
         app:layout_constraintBottom_toBottomOf="@+id/textView_number_of_people"/>
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_number_of_people"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="textView_number_of_people, spinner_number_of_people"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

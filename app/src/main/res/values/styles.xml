@@ -49,8 +49,8 @@
 
         <!-- Widgets -->
         <item name="materialButtonStyle">@style/AppTheme.Button</item> <!-- defaults to contained -->
-<!--        <item name="borderlessButtonStyle"></item>  -->
         <item name="materialButtonOutlinedStyle">@style/AppTheme.OutlinedButton</item>
+        <item name="android:spinnerStyle">@style/AppTheme.Spinner</item>
 
     </style>
 
@@ -63,6 +63,10 @@
         <item name="android:textColor">@color/selector_outlined_button_toggle_text_color</item>
         <item name="strokeColor">?colorPrimary</item>
         <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="AppTheme.Spinner" parent="Widget.AppCompat.Spinner">
+        <item name="backgroundTint">?colorAccent</item>
     </style>
 
 </resources>
