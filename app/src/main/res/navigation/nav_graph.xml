@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/billTypeFragment"
-        android:name="com.liuyuheng.handytools.ui.bill.BillTypeFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
         android:label="Bill Calculator"
         tools:layout="@layout/fragment_bill_type"/>
     <fragment
