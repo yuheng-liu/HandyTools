@@ -9,7 +9,7 @@
         android:id="@+id/billTypeFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
         android:label="Bill Calculator"
-        tools:layout="@layout/fragment_bill_type"/>
+        tools:layout="@layout/fragment_bill_calculator"/>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.liuyuheng.handytools.ui.HomeFragment"

@@ -4,14 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.repository.Bill
 
-class BillsAdapter(): androidx.recyclerview.widget.ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
+class BillsAdapter(
+    private val onClickListener: ()
+): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
-        return BillItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout. , parent, false))
+        return BillItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_bill , parent, false))
     }
 
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {

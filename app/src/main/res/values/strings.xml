@@ -5,4 +5,11 @@
     <string name="confirm">Confirm</string>
     <string name="bill_calculator">Bill Calculator</string>
     <string name="bills">Bills</string>
+    <string name="bill_name">Bill Name</string>
+    <string name="total_costs">Total Costs</string>
+    <string name="number_of_people">Number of People</string>
+    <string name="next_step">Next Step</string>
+    <string name="person_name">Person %d Name : </string>
+    <string name="paid_amount">Paid Amount ($) : </string>
+    <string name="done">Done</string>
 </resources>
