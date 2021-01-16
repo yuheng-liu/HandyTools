@@ -7,7 +7,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
 <!--        <item name="colorOnPrimary"></item>-->
         <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
-<!--        <item name="colorSecondary"></item>-->
+        <item name="colorSecondary">@color/gray</item>
 <!--        <item name="colorOnSecondary"></item>-->
 <!--        <item name="colorSecondaryVariant"></item>-->
         <item name="colorSurface">@color/white</item>
@@ -20,6 +20,7 @@
 <!--        <item name="colorControlHighlight"></item>-->
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
 
         <!-- Dimensions -->
         <!-- standard (min) height for list items -->
@@ -51,21 +52,22 @@
         <item name="materialButtonStyle">@style/AppTheme.Button</item> <!-- defaults to contained -->
         <item name="materialButtonOutlinedStyle">@style/AppTheme.OutlinedButton</item>
         <item name="android:spinnerStyle">@style/AppTheme.Spinner</item>
-        <item name="android:textViewStyle">@style/AppTheme.TextView</item>
         <item name="imageButtonStyle">@style/AppTheme.ImageButton</item>
         <item name="materialCardViewStyle">@style/AppTheme.CardView</item>
         <item name="textInputStyle">@style/AppTheme.TextInput</item>
 
     </style>
 
-    <style name="AppTheme.TextInput" parent="Widget.Design.TextInputLayout">
-        <item name="boxBackgroundColor">@android:color/transparent</item>
-        <item name="android:background">?colorSurface</item>
+    <!-- Widget Themes -->
+    <style name="AppTheme.TextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">?colorSurface</item>
+        <item name="errorTextColor">?colorError</item>
     </style>
 
     <style name="AppTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="textAllCaps">false</item>
         <item name="backgroundTint">?colorAccent</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="AppTheme.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -79,19 +81,14 @@
         <item name="backgroundTint">?colorAccent</item>
     </style>
 
-    <style name="AppTheme.TextView" parent="Widget.AppCompat.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
-    </style>
-
     <style name="AppTheme.ImageButton" parent="Widget.AppCompat.ImageButton">
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:padding">0dp</item>
     </style>
 
     <style name="AppTheme.CardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">8dp</item>
-        <item name="cardElevation">1dp</item>
-        <item name="cardBackgroundColor">?colorSurface</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">2dp</item>
     </style>
 
 </resources>

@@ -18,10 +18,10 @@ object KoinModules {
     }
 
     private val uiModules = module {
-        viewModel { BillCalculatorViewModel() }
+        viewModel { BillCalculatorViewModel(get()) }
     }
     
-    private val repoModules = module { 
+    private val repoModules = module {
         BillCalculatorRepo()
     }
 }

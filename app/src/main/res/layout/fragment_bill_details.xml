@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/default_margin_padding">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_bill_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/bill_name"
+        android:hint="Bill Name"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,8 +27,9 @@
         android:id="@+id/textInputLayout_bill_total_cost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_layout_margin"
-        android:hint="@string/total_costs"
+        android:layout_marginTop="@dimen/small_layout_spacing"
+        android:hint="Total Costs ($.cents)"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_name">
@@ -41,8 +44,9 @@
         android:id="@+id/textInputLayout_number_of_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_layout_margin"
-        android:hint="@string/number_of_people"
+        android:layout_marginTop="@dimen/small_layout_spacing"
+        android:hint="Number of People"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_total_cost">
@@ -57,8 +61,7 @@
         android:id="@+id/button_next_step"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/next_step"
+        android:text="Next Step"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_number_of_people" />
@@ -67,7 +70,10 @@
         android:id="@+id/recyclerView_persons_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginVertical="@dimen/default_layout_padding"
+        android:layout_marginVertical="@dimen/small_layout_spacing"
+        android:paddingVertical="@dimen/minor_layout_spacing"
+        android:paddingHorizontal="@dimen/minor_layout_spacing"
+        android:background="@drawable/bg_rounded_bordered"
         tools:listitem="@layout/list_item_bill_details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +84,8 @@
         android:id="@+id/button_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/done"
+        android:text="Done"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

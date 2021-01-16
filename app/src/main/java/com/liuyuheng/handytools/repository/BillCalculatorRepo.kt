@@ -1,7 +1,16 @@
 package com.liuyuheng.handytools.repository
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
 class BillCalculatorRepo {
-    
+
+    private val personsListFlow = MutableStateFlow(emptyList<BillPerson>())
+    fun getPersonsListFlow() = personsListFlow.asStateFlow()
+
+    fun setPersonsList(list: List<String>) {
+        personsListFlow.value = list.map { personName -> BillPerson(name = personName) }
+    }
 }
 
 data class Bill(
@@ -16,3 +25,8 @@ data class Bill(
         val paidBy: String
     )
 }
+
+data class BillPerson(
+    val name: String,
+    val paidAmount: Double = 0.0
+)

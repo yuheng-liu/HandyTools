@@ -10,7 +10,7 @@ import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.repository.Bill
 
 class BillsAdapter(
-    private val onClickListener: ()
+//    private val onClickListener: ()
 ): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {

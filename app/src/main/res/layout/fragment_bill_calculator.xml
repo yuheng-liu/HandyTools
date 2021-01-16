@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/default_margin_padding"
     android:animateLayoutChanges="true">
 
-    <TextView
-        android:id="@+id/textView_bills_title"
+    <Button
+        android:id="@+id/button_add_person"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginEnd="@dimen/default_margin_padding"
-        android:text="@string/bills"
-        android:background="@drawable/bg_rounded_10dp"
+        android:text="Add/Edit Persons"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton_add_bill"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/imageButton_add_bill"
-        android:layout_width="@dimen/default_icon_size"
-        android:layout_height="@dimen/default_icon_size"
-        android:src="@drawable/ic_add_circle"
-        android:scaleType="fitXY"
+    <TextView
+        android:id="@+id/textView_current_persons_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_layout_spacing"
+        android:text="Current Persons: "
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_add_person" />
+
+    <TextView
+        android:id="@+id/textView_current_persons_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_layout_spacing"
+        tools:text="Andy, Beth, Charlie"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_current_persons_title"/>
+
+    <Button
+        android:id="@+id/button_add_bill"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_layout_spacing"
+        android:text="Add Bill"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textView_bills_title"
-        app:layout_constraintBottom_toBottomOf="@id/textView_bills_title"/>
+        app:layout_constraintTop_toBottomOf="@id/textView_current_persons_value"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_bills"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/small_margin_padding"
-        app:layout_constraintTop_toBottomOf="@id/textView_bills_title"
+        app:layout_constraintTop_toBottomOf="@id/button_add_bill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

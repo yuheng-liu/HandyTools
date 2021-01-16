@@ -9,7 +9,11 @@
         android:id="@+id/billTypeFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
         android:label="Bill Calculator"
-        tools:layout="@layout/fragment_bill_calculator"/>
+        tools:layout="@layout/fragment_bill_calculator">
+        <action
+            android:id="@+id/action_billTypeFragment_to_billDetailsDialogFragment"
+            app:destination="@id/billDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.liuyuheng.handytools.ui.HomeFragment"
@@ -19,4 +23,9 @@
             android:id="@+id/action_homeFragment_to_billTypeFragment"
             app:destination="@id/billTypeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/billDetailsFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.BillDetailsFragment"
+        android:label="Bill Details"
+        tools:layout="@layout/fragment_bill_details"/>
 </navigation>
