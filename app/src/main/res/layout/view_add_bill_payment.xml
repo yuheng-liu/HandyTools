@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/default_layout_spacing">
-
-    <TextView
-        android:id="@+id/textView_add_instructions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Type person names separated by a comma (e.g. Andy, Bob, Charlene)"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_layout_spacing"
+    tools:ignore="labelFor">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_person_names"
+        android:id="@+id/textInputLayout_person_spinner"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Person"
+        app:errorEnabled="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout_paid_amount"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
-        android:hint="Person Names"
-        app:placeholderText="Andy, Bob, Charlene"
+        android:hint="Paid Amount"
+        app:errorEnabled="true"
+        app:prefixText="$"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_add_instructions">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_person_spinner">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -42,7 +50,7 @@
         android:layout_marginTop="@dimen/default_layout_spacing"
         android:text="Done"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_person_names"/>
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_paid_amount"/>
 
     <Button
         android:id="@+id/button_cancel"
@@ -54,5 +62,19 @@
         app:layout_constraintTop_toTopOf="@id/button_done"
         app:layout_constraintBottom_toBottomOf="@id/button_done"
         app:layout_constraintEnd_toStartOf="@id/button_done"/>
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE"
+        android:backgroundTint="?colorError"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_cancel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="@id/button_done"
+        app:layout_constraintBottom_toBottomOf="@id/button_done"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

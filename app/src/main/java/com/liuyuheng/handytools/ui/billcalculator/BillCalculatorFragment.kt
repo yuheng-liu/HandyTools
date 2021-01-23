@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.liuyuheng.common.utils.dialogs.BillCalculatorDialogUtils
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentBillCalculatorBinding
 import com.liuyuheng.handytools.internal.navigate
+import com.liuyuheng.handytools.repository.Bill
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BillCalculatorFragment : Fragment() {
@@ -19,7 +18,6 @@ class BillCalculatorFragment : Fragment() {
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     private lateinit var billsListAdapter: BillsAdapter
-    private lateinit var addEditPersonDialog: AlertDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBillCalculatorBinding.inflate(inflater, container, false)
@@ -29,34 +27,33 @@ class BillCalculatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupDialogs()
+        setupRecyclerView()
         setupObservers()
         setupListeners()
     }
 
-    private fun setupDialogs() {
-        addEditPersonDialog = BillCalculatorDialogUtils.getAddEditPersonsDialog(requireContext(), View.inflate(requireContext(), R.layout.view_add_edit_person, null))
-        addEditPersonDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener{
-
-        }
+    private fun setupRecyclerView() {
+        billsListAdapter = BillsAdapter { bill -> onBillsAdapterItemPressed(bill) }
+        binding.recyclerViewBills.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewBills.adapter = billsListAdapter
     }
 
     private fun setupObservers() {
-
+        billCalculatorViewModel.getPersonsStringLiveData().observe(viewLifecycleOwner) { personsString ->
+            binding.textViewCurrentPersonsValue.text = personsString
+            binding.buttonAddBill.isEnabled = personsString.isNotBlank()
+        }
+        billCalculatorViewModel.getBillsListLiveData().observe(viewLifecycleOwner) { billsList ->
+            billsListAdapter.submitList(billsList)
+        }
     }
 
     private fun setupListeners() {
-        binding.buttonAddPerson.setOnClickListener { showAddEditPersonsDialog() }
+        binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billTypeFragment_to_addEditPersonDialogFragment) }
         binding.buttonAddBill.setOnClickListener { navigate(R.id.action_billTypeFragment_to_billDetailsDialogFragment) }
     }
 
-    private fun showAddEditPersonsDialog() {
-        val editInfoDialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(View.inflate(requireContext(), R.layout.view_add_edit_person, null))
-            .setPositiveButton("Done", null)
-            .setNegativeButton("Cancel", null)
-            .create()
+    private fun onBillsAdapterItemPressed(bill: Bill) {
 
-        editInfoDialog.show()
     }
 }

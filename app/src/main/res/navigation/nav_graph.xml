@@ -6,13 +6,16 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/billTypeFragment"
+        android:id="@+id/billCalculatorFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
         android:label="Bill Calculator"
         tools:layout="@layout/fragment_bill_calculator">
         <action
             android:id="@+id/action_billTypeFragment_to_billDetailsDialogFragment"
             app:destination="@id/billDetailsFragment" />
+        <action
+            android:id="@+id/action_billTypeFragment_to_addEditPersonDialogFragment"
+            app:destination="@id/addEditPersonDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -21,11 +24,25 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_billTypeFragment"
-            app:destination="@id/billTypeFragment" />
+            app:destination="@id/billCalculatorFragment" />
     </fragment>
     <fragment
         android:id="@+id/billDetailsFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.BillDetailsFragment"
         android:label="Bill Details"
-        tools:layout="@layout/fragment_bill_details"/>
+        tools:layout="@layout/fragment_bill_details">
+        <action
+            android:id="@+id/action_billDetailsFragment_to_addBillPaymentDialogFragment"
+            app:destination="@id/addBillPaymentDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addEditPersonDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditPersonDialogFragment"
+        android:label="AddEditPersonDialogFragment"
+        tools:layout="@layout/view_add_edit_person"/>
+    <dialog
+        android:id="@+id/addBillPaymentDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillPaymentDialogFragment"
+        android:label="AddBillPaymentDialogFragment"
+        tools:layout="@layout/view_add_bill_payment"/>
 </navigation>

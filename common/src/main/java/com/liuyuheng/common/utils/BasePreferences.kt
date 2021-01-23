@@ -1,4 +1,4 @@
-package com.liuyuheng.common.utils.preferences
+package com.liuyuheng.common.utils
 
 import android.content.Context
 import android.content.SharedPreferences

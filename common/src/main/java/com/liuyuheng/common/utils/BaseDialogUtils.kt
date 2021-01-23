@@ -1,4 +1,4 @@
-package com.liuyuheng.common.utils.dialogs
+package com.liuyuheng.common.utils
 
 import android.content.Context
 import android.view.View
@@ -7,9 +7,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 abstract class BaseDialogUtils {
 
-    fun createDefaultAlertDialog(context: Context, title: Int? = null, message: Int? = null,
-                                      positiveText: Int? = null, positiveFunction: (() -> Unit)? = null,
-                                      negativeText: Int? = null, negativeFunction: (() -> Unit)? = null,
+    fun createDefaultAlertDialog(context: Context, title: String? = null, message: String? = null,
+                                      positiveText: String? = null, positiveFunction: (() -> Unit)? = null,
+                                      negativeText: String? = null, negativeFunction: (() -> Unit)? = null,
                                       cancellable: Boolean = true): AlertDialog {
 
         val builder = MaterialAlertDialogBuilder(context)
@@ -23,9 +23,9 @@ abstract class BaseDialogUtils {
         return builder.create()
     }
 
-    fun createCustomAlertDialog(context: Context, title: Int? = null, message: Int? = null, view: View,
-                                     positiveText: Int? = null, positiveFunction: (() -> Unit)? = null,
-                                     negativeText: Int? = null, negativeFunction: (() -> Unit)? = null,
+    fun createCustomAlertDialog(context: Context, title: String? = null, message: String? = null, view: View,
+                                     positiveText: String? = null, positiveFunction: (() -> Unit)? = null,
+                                     negativeText: String? = null, negativeFunction: (() -> Unit)? = null,
                                      cancellable: Boolean = true): AlertDialog {
 
         val builder = MaterialAlertDialogBuilder(context)

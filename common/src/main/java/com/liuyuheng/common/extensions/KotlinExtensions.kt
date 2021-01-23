@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.round
 
 val Any.TAG: String
     get() {
@@ -25,4 +26,10 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
 fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
     val formatter = SimpleDateFormat(format, locale)
     return formatter.format(this).replace("am", "AM").replace("pm", "PM")
+}
+
+fun Double.round(decimals: Int): Double {
+    var multiplier = 1.00
+    repeat(decimals) { multiplier *= 10 }
+    return round(this * multiplier) / multiplier
 }

@@ -1,25 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/minor_layout_spacing"
     app:contentPadding="@dimen/default_margin_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/default_layout_spacing">
 
         <TextView
             android:id="@+id/textView_bill_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Bill number 1"
+            tools:text="Bill 1 (Cakes)"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_bill_total_costs"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_bill_total_costs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="$65.10"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/textView_bill_name"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/textView_payments_person_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_layout_spacing"
+            tools:text="Yuheng\nKeyun\nAndy"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/textView_bill_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textView_payments_person_paid_amount"/>
+
+        <TextView
+            android:id="@+id/textView_payments_person_paid_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_layout_spacing"
+            tools:text="$12.30\n$8.10\n$15.80"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/textView_bill_total_costs"
+            app:layout_constraintStart_toEndOf="@id/textView_payments_person_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

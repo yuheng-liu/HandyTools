@@ -20,7 +20,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -30,6 +30,8 @@
         android:layout_marginTop="@dimen/small_layout_spacing"
         android:hint="Total Costs ($.cents)"
         app:errorEnabled="true"
+        app:prefixText="$"
+        app:placeholderText="00.00"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_name">
@@ -40,31 +42,14 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_number_of_people"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_layout_spacing"
-        android:hint="Number of People"
-        app:errorEnabled="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_total_cost">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
-        android:id="@+id/button_next_step"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_add_payment"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Next Step"
+        android:text="Add Payment Per Person"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_number_of_people" />
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_total_cost" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_persons_list"
@@ -77,15 +62,14 @@
         tools:listitem="@layout/list_item_bill_details"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_next_step"
+        app:layout_constraintTop_toBottomOf="@id/button_add_payment"
         app:layout_constraintBottom_toTopOf="@id/button_done"/>
 
     <Button
         android:id="@+id/button_done"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Done"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

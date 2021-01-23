@@ -22,6 +22,6 @@ object KoinModules {
     }
     
     private val repoModules = module {
-        BillCalculatorRepo()
+        single { BillCalculatorRepo() }
     }
 }
