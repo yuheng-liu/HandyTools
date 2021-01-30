@@ -14,9 +14,10 @@ import com.liuyuheng.handytools.databinding.ViewAddBillPaymentBinding
 import com.liuyuheng.handytools.internal.utilValidatePaidAmount
 import com.liuyuheng.handytools.internal.utilValidatePerson
 import com.liuyuheng.handytools.repository.BillPerson
+import com.liuyuheng.handytools.ui.AddBillPaymentDialogFragmentState
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddBillPaymentDialogFragment: DialogFragment() {
+class AddBillPersonDialogFragment: DialogFragment() {
 
     private lateinit var binding: ViewAddBillPaymentBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
@@ -45,8 +46,8 @@ class AddBillPaymentDialogFragment: DialogFragment() {
 
     private fun setupUI() {
         when (val fragmentState = billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-            is FragmentState.AddBillPerson -> { /* default state for adding of new bill person */ }
-            is FragmentState.EditBillPerson -> { // fragment can also be used for editing a current bill person
+            is AddBillPaymentDialogFragmentState.AddBillPerson -> { /* default state for adding of new bill person */ }
+            is AddBillPaymentDialogFragmentState.EditBillPerson -> { // fragment can also be used for editing a current bill person
                 val currentBillPerson = fragmentState.billPerson
                 binding.buttonDelete.visible()
                 binding.textInputLayoutPersonSpinner.editText?.setText(currentBillPerson.name)
@@ -68,15 +69,16 @@ class AddBillPaymentDialogFragment: DialogFragment() {
         binding.buttonDone.setOnClickListener {
             val personName = binding.textInputLayoutPersonSpinner.editText?.text.toString()
             val paidAmount = binding.textInputLayoutPaidAmount.editText?.text.toString()
+            val billPerson = BillPerson(personName, if (paidAmount.isNotBlank()) paidAmount.toDouble() else 0.0)
 
             if (validatePerson(personName) and validatePaidAmount(paidAmount) and validateIsNotDuplicate(personName)) {
-                billCalculatorViewModel.addEditBillPerson(BillPerson(personName, paidAmount.toDouble()))
+                billCalculatorViewModel.addEditBillPerson(billPerson)
                 dismiss()
             }
         }
         binding.buttonDelete.setOnClickListener {
             when (val fragmentState = billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-                is FragmentState.EditBillPerson -> {
+                is AddBillPaymentDialogFragmentState.EditBillPerson -> {
                     billCalculatorViewModel.deleteCurrentBillPerson(fragmentState.billPerson)
                     dismiss()
                 }
@@ -89,7 +91,7 @@ class AddBillPaymentDialogFragment: DialogFragment() {
     private fun validatePaidAmount(paidAmount: String) = utilValidatePaidAmount(paidAmount, binding.textInputLayoutPaidAmount)
     private fun validateIsNotDuplicate(personName: String): Boolean {
         return when (billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-            is FragmentState.AddBillPerson -> {
+            is AddBillPaymentDialogFragmentState.AddBillPerson -> {
                 if (billCalculatorViewModel.isPersonAlreadyExists(personName)) {
                     showToast("Person already exists, please click on the person card to edit instead")
                     false
@@ -97,14 +99,7 @@ class AddBillPaymentDialogFragment: DialogFragment() {
                     true
                 }
             }
-            is FragmentState.EditBillPerson -> true
-        }
-    }
-
-    companion object {
-        sealed class FragmentState {
-            object AddBillPerson: FragmentState()
-            data class EditBillPerson(val billPerson: BillPerson): FragmentState()
+            else -> true
         }
     }
 }

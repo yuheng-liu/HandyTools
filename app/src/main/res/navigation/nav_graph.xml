@@ -11,10 +11,10 @@
         android:label="Bill Calculator"
         tools:layout="@layout/fragment_bill_calculator">
         <action
-            android:id="@+id/action_billTypeFragment_to_billDetailsDialogFragment"
+            android:id="@+id/action_billCalculatorFragment_to_billDetailsDialogFragment"
             app:destination="@id/billDetailsFragment" />
         <action
-            android:id="@+id/action_billTypeFragment_to_addEditPersonDialogFragment"
+            android:id="@+id/action_billCalculatorFragment_to_addEditPersonDialogFragment"
             app:destination="@id/addEditPersonDialogFragment" />
     </fragment>
     <fragment
@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_bill_details">
         <action
             android:id="@+id/action_billDetailsFragment_to_addBillPaymentDialogFragment"
-            app:destination="@id/addBillPaymentDialogFragment" />
+            app:destination="@id/addBillPersonDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/addEditPersonDialogFragment"
@@ -41,8 +41,8 @@
         android:label="AddEditPersonDialogFragment"
         tools:layout="@layout/view_add_edit_person"/>
     <dialog
-        android:id="@+id/addBillPaymentDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillPaymentDialogFragment"
-        android:label="AddBillPaymentDialogFragment"
+        android:id="@+id/addBillPersonDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillPersonDialogFragment"
+        android:label="AddBillPersonDialogFragment"
         tools:layout="@layout/view_add_bill_payment"/>
 </navigation>

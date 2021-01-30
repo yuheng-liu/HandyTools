@@ -15,6 +15,8 @@ import com.liuyuheng.handytools.internal.utilValidateBillName
 import com.liuyuheng.handytools.internal.utilValidateTotalCosts
 import com.liuyuheng.handytools.repository.Bill
 import com.liuyuheng.handytools.repository.BillPerson
+import com.liuyuheng.handytools.ui.AddBillPaymentDialogFragmentState
+import com.liuyuheng.handytools.ui.BillDetailsFragmentState
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BillDetailsFragment: Fragment() {
@@ -44,31 +46,42 @@ class BillDetailsFragment: Fragment() {
     }
 
     private fun setupObservers() {
-        billCalculatorViewModel.getPersonsListLiveData().observe(viewLifecycleOwner) { billPersonList ->
-            personsListAdapter.submitList(billPersonList)
+        when (billCalculatorViewModel.billDetailsFragmentState) {
+            is BillDetailsFragmentState.AddBill -> billCalculatorViewModel.getNewBillLiveData().observe(viewLifecycleOwner) { newBill -> updateUi(newBill) }
+            is BillDetailsFragmentState.EditBill -> billCalculatorViewModel.getCurrentBillLiveData().observe(viewLifecycleOwner) { currentBill -> updateUi(currentBill) }
         }
     }
 
     private fun setupListeners() {
         binding.buttonAddPayment.setOnClickListener {
-            billCalculatorViewModel.addBillPaymentDialogFragmentState = AddBillPaymentDialogFragment.Companion.FragmentState.AddBillPerson
+            val billName = binding.textInputLayoutBillName.editText?.text.toString()
+            val totalCosts = binding.textInputLayoutBillTotalCost.editText?.text.toString()
+
+            billCalculatorViewModel.updateNewBillInfo(billName, totalCosts.toDouble())
+            billCalculatorViewModel.addBillPaymentDialogFragmentState = AddBillPaymentDialogFragmentState.AddBillPerson
             navigate(R.id.action_billDetailsFragment_to_addBillPaymentDialogFragment)
         }
         binding.buttonDone.setOnClickListener {
             val billName = binding.textInputLayoutBillName.editText?.text.toString()
             val totalCosts = binding.textInputLayoutBillTotalCost.editText?.text.toString()
-            val personsList = billCalculatorViewModel.getPersonsList()
+            val personsList = personsListAdapter.currentList
 
-            if (validateBillName(billName) and validateTotalCosts(totalCosts) and validateBillPayments(personsList) and validateIsNotDuplicate(billName)) {
-                billCalculatorViewModel.addBill(Bill(billName, totalCosts.toDouble(), personsList))
+            if (validateBillName(billName) and validateTotalCosts(totalCosts) and validateBillPayments(personsList) && validateIsNotDuplicate(billName)) {
+                billCalculatorViewModel.addEditBill(Bill(billName, totalCosts.toDouble(), personsList))
                 findNavController().navigateUp()
             }
         }
     }
 
     private fun onPersonsAdapterItemPressed(billPerson: BillPerson) {
-        billCalculatorViewModel.addBillPaymentDialogFragmentState = AddBillPaymentDialogFragment.Companion.FragmentState.EditBillPerson(billPerson)
+        billCalculatorViewModel.addBillPaymentDialogFragmentState = AddBillPaymentDialogFragmentState.EditBillPerson(billPerson)
         navigate(R.id.action_billDetailsFragment_to_addBillPaymentDialogFragment)
+    }
+
+    private fun updateUi(bill: Bill) {
+        binding.textInputLayoutBillName.editText?.setText(bill.name)
+        if (bill.totalCosts != 0.0) binding.textInputLayoutBillTotalCost.editText?.setText(bill.totalCosts.toString())
+        personsListAdapter.submitList(bill.billPersonList)
     }
 
     private fun validateBillName(billName: String) = utilValidateBillName(billName, binding.textInputLayoutBillName)

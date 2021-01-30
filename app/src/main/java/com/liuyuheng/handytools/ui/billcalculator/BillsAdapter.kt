@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.liuyuheng.handytools.databinding.ListItemBillBinding
 import com.liuyuheng.handytools.repository.Bill
 
-class BillsAdapter(private val itemListener: (Bill) -> Unit): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
+class BillsAdapter(private val itemListener: (Int) -> Unit): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
         return BillItemViewHolder(ListItemBillBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -19,14 +19,14 @@ class BillsAdapter(private val itemListener: (Bill) -> Unit): ListAdapter<Bill, 
     }
 
     class BillItemViewHolder(private val binding: ListItemBillBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int, bill: Bill, itemListener: (Bill) -> Unit) = with(binding) {
+        fun bind(position: Int, bill: Bill, itemListener: (Int) -> Unit) = with(binding) {
             val billName = "Bill ${position+1} (${bill.name})"
             binding.textViewBillName.text = billName
             binding.textViewBillTotalCosts.text = bill.getTotalCostsString()
-            binding.textViewPaymentsPersonName.text = bill.paymentList.joinToString("\n") { it.name }
-            binding.textViewPaymentsPersonPaidAmount.text = bill.paymentList.joinToString("\n") { it.getPaidAmountString() }
+            binding.textViewPaymentsPersonName.text = bill.billPersonList.joinToString("\n") { it.name }
+            binding.textViewPaymentsPersonPaidAmount.text = bill.billPersonList.joinToString("\n") { it.getPaidAmountString() }
 
-            binding.root.setOnClickListener{ itemListener(bill) }
+            binding.root.setOnClickListener{ itemListener(position) }
         }
     }
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentBillCalculatorBinding
 import com.liuyuheng.handytools.internal.navigate
-import com.liuyuheng.handytools.repository.Bill
+import com.liuyuheng.handytools.ui.BillDetailsFragmentState
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BillCalculatorFragment : Fragment() {
@@ -43,17 +43,22 @@ class BillCalculatorFragment : Fragment() {
             binding.textViewCurrentPersonsValue.text = personsString
             binding.buttonAddBill.isEnabled = personsString.isNotBlank()
         }
-        billCalculatorViewModel.getBillsListLiveData().observe(viewLifecycleOwner) { billsList ->
+        billCalculatorViewModel.getAllBillListLiveData().observe(viewLifecycleOwner) { billsList ->
             billsListAdapter.submitList(billsList)
         }
     }
 
     private fun setupListeners() {
-        binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billTypeFragment_to_addEditPersonDialogFragment) }
-        binding.buttonAddBill.setOnClickListener { navigate(R.id.action_billTypeFragment_to_billDetailsDialogFragment) }
+        binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addEditPersonDialogFragment) }
+        binding.buttonAddBill.setOnClickListener {
+            billCalculatorViewModel.billDetailsFragmentState = BillDetailsFragmentState.AddBill
+            navigate(R.id.action_billCalculatorFragment_to_billDetailsDialogFragment)
+        }
     }
 
-    private fun onBillsAdapterItemPressed(bill: Bill) {
-
+    private fun onBillsAdapterItemPressed(index: Int) {
+        billCalculatorViewModel.currentBillIndex = index
+        billCalculatorViewModel.billDetailsFragmentState = BillDetailsFragmentState.EditBill
+        navigate(R.id.action_billCalculatorFragment_to_billDetailsDialogFragment)
     }
 }
