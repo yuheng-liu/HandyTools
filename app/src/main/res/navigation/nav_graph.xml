@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_billCalculatorFragment_to_addEditPersonDialogFragment"
             app:destination="@id/addEditPersonDialogFragment" />
+        <action
+            android:id="@+id/action_billCalculatorFragment_to_addBillDialogFragment"
+            app:destination="@id/addBillDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -39,10 +42,15 @@
         android:id="@+id/addEditPersonDialogFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditPersonDialogFragment"
         android:label="AddEditPersonDialogFragment"
-        tools:layout="@layout/view_add_edit_person"/>
+        tools:layout="@layout/dialog_fragment_add_edit_person"/>
     <dialog
         android:id="@+id/addBillPersonDialogFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillPersonDialogFragment"
         android:label="AddBillPersonDialogFragment"
-        tools:layout="@layout/view_add_bill_payment"/>
+        tools:layout="@layout/dialog_fragment_add_bill_person"/>
+    <dialog
+        android:id="@+id/addBillDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillDialogFragment"
+        android:label="AddBillDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_bill"/>
 </navigation>

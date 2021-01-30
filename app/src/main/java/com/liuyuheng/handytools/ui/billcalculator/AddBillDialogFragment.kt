@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.DialogFragmentAddEditPersonBinding
+import com.liuyuheng.handytools.databinding.DialogFragmentAddBillBinding
+import com.liuyuheng.handytools.internal.utilValidateBillName
+import com.liuyuheng.handytools.internal.utilValidateTotalCosts
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddEditPersonDialogFragment: DialogFragment() {
+class AddBillDialogFragment: DialogFragment() {
 
-    private lateinit var binding: DialogFragmentAddEditPersonBinding
+    private lateinit var binding: DialogFragmentAddBillBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // set dialog background here, dialogs have their own window
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_10dp)
-        binding = DialogFragmentAddEditPersonBinding.inflate(inflater, container, false)
+        binding = DialogFragmentAddBillBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObservers()
         setupListeners()
     }
 
@@ -36,17 +36,19 @@ class AddEditPersonDialogFragment: DialogFragment() {
         dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun setupObservers() {
-        billCalculatorViewModel.getPersonsStringLiveData().observe(viewLifecycleOwner) { personsString ->
-            if (personsString.isNotBlank()) binding.textInputLayoutPersonNames.editText?.setText(personsString)
-        }
-    }
-
     private fun setupListeners() {
         binding.buttonDone.setOnClickListener {
-            billCalculatorViewModel.setPersonsString(binding.textInputLayoutPersonNames.editText?.text.toString())
+            val billName = binding.textInputLayoutBillName.editText?.text.toString()
+            val totalCosts = binding.textInputLayoutBillTotalCost.editText?.text.toString()
+
+            if (validateBillName(billName) and validateTotalCosts(totalCosts)) {
+                billCalculatorViewModel.addBill(billName, totalCosts.toDouble())
+            }
             dismiss()
         }
         binding.buttonCancel.setOnClickListener { dismiss() }
     }
+
+    private fun validateBillName(billName: String) = utilValidateBillName(billName, binding.textInputLayoutBillName)
+    private fun validateTotalCosts(totalCosts: String) = utilValidateTotalCosts(totalCosts, binding.textInputLayoutBillTotalCost)
 }

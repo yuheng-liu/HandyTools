@@ -1,32 +1,42 @@
 package com.liuyuheng.handytools.ui.billcalculator
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.liuyuheng.handytools.databinding.ListItemBillBinding
 import com.liuyuheng.handytools.repository.Bill
 
-class BillsAdapter(private val itemListener: (Int) -> Unit): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
+class BillsAdapter(
+    private val itemListener: (Int) -> Unit,
+    private val onLongClickListener: (View, Int) -> Unit
+): ListAdapter<Bill, BillsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
         return BillItemViewHolder(ListItemBillBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
-        holder.bind(position, getItem(position), itemListener)
+        holder.bind(position, getItem(position), itemListener, onLongClickListener)
     }
 
     class BillItemViewHolder(private val binding: ListItemBillBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int, bill: Bill, itemListener: (Int) -> Unit) = with(binding) {
+        fun bind(position: Int, bill: Bill, itemListener: (Int) -> Unit, onLongClickListener: (View, Int) -> Unit) = with(binding) {
             val billName = "Bill ${position+1} (${bill.name})"
             binding.textViewBillName.text = billName
             binding.textViewBillTotalCosts.text = bill.getTotalCostsString()
             binding.textViewPaymentsPersonName.text = bill.billPersonList.joinToString("\n") { it.name }
             binding.textViewPaymentsPersonPaidAmount.text = bill.billPersonList.joinToString("\n") { it.getPaidAmountString() }
 
-            binding.root.setOnClickListener{ itemListener(position) }
+            binding.root.setOnClickListener { itemListener(position) }
+            binding.root.setOnLongClickListener { view ->
+                onLongClickListener(view, position)
+                true
+            }
         }
     }
 

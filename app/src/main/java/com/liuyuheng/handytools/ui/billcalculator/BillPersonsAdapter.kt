@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.liuyuheng.handytools.databinding.ListItemBillDetailsBinding
 import com.liuyuheng.handytools.repository.BillPerson
 
-class PersonsAdapter(private val itemListener: (BillPerson) -> Unit): ListAdapter<BillPerson, PersonsAdapter.PersonViewHolder>(PersonDiffCallback()) {
+class BillPersonsAdapter(private val itemListener: (BillPerson) -> Unit): ListAdapter<BillPerson, BillPersonsAdapter.PersonViewHolder>(PersonDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
         return PersonViewHolder(ListItemBillDetailsBinding.inflate(LayoutInflater.from(parent.context), parent, false))

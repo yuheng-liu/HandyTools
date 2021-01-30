@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.DialogFragment
-import com.liuyuheng.common.extensions.showToast
 import com.liuyuheng.common.extensions.visible
 import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.ViewAddBillPaymentBinding
+import com.liuyuheng.handytools.databinding.DialogFragmentAddBillPersonBinding
 import com.liuyuheng.handytools.internal.utilValidatePaidAmount
 import com.liuyuheng.handytools.internal.utilValidatePerson
 import com.liuyuheng.handytools.repository.BillPerson
@@ -19,12 +18,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddBillPersonDialogFragment: DialogFragment() {
 
-    private lateinit var binding: ViewAddBillPaymentBinding
+    private lateinit var binding: DialogFragmentAddBillPersonBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_10dp)
-        binding = ViewAddBillPaymentBinding.inflate(inflater, container, false)
+        binding = DialogFragmentAddBillPersonBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -71,7 +70,7 @@ class AddBillPersonDialogFragment: DialogFragment() {
             val paidAmount = binding.textInputLayoutPaidAmount.editText?.text.toString()
             val billPerson = BillPerson(personName, if (paidAmount.isNotBlank()) paidAmount.toDouble() else 0.0)
 
-            if (validatePerson(personName) and validatePaidAmount(paidAmount) and validateIsNotDuplicate(personName)) {
+            if (validatePerson(personName) and validatePaidAmount(paidAmount)) {
                 billCalculatorViewModel.addEditBillPerson(billPerson)
                 dismiss()
             }
@@ -89,18 +88,5 @@ class AddBillPersonDialogFragment: DialogFragment() {
 
     private fun validatePerson(personName: String) = utilValidatePerson(personName, binding.textInputLayoutPersonSpinner)
     private fun validatePaidAmount(paidAmount: String) = utilValidatePaidAmount(paidAmount, binding.textInputLayoutPaidAmount)
-    private fun validateIsNotDuplicate(personName: String): Boolean {
-        return when (billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-            is AddBillPaymentDialogFragmentState.AddBillPerson -> {
-                if (billCalculatorViewModel.isPersonAlreadyExists(personName)) {
-                    showToast("Person already exists, please click on the person card to edit instead")
-                    false
-                } else {
-                    true
-                }
-            }
-            else -> true
-        }
-    }
 }
 

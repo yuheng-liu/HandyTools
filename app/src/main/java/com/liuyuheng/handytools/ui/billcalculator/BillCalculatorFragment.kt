@@ -1,15 +1,15 @@
 package com.liuyuheng.handytools.ui.billcalculator
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentBillCalculatorBinding
 import com.liuyuheng.handytools.internal.navigate
-import com.liuyuheng.handytools.ui.BillDetailsFragmentState
+import com.liuyuheng.handytools.repository.Bill
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BillCalculatorFragment : Fragment() {
@@ -33,7 +33,7 @@ class BillCalculatorFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        billsListAdapter = BillsAdapter { bill -> onBillsAdapterItemPressed(bill) }
+        billsListAdapter = BillsAdapter ({ bill -> onBillItemPressed(bill) }, { view, selectedIndex -> onBillItemLongPressed(view, selectedIndex) })
         binding.recyclerViewBills.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewBills.adapter = billsListAdapter
     }
@@ -50,15 +50,22 @@ class BillCalculatorFragment : Fragment() {
 
     private fun setupListeners() {
         binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addEditPersonDialogFragment) }
-        binding.buttonAddBill.setOnClickListener {
-            billCalculatorViewModel.billDetailsFragmentState = BillDetailsFragmentState.AddBill
-            navigate(R.id.action_billCalculatorFragment_to_billDetailsDialogFragment)
-        }
+        binding.buttonAddBill.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addBillDialogFragment) }
     }
 
-    private fun onBillsAdapterItemPressed(index: Int) {
+    private fun onBillItemPressed(index: Int) {
         billCalculatorViewModel.currentBillIndex = index
-        billCalculatorViewModel.billDetailsFragmentState = BillDetailsFragmentState.EditBill
         navigate(R.id.action_billCalculatorFragment_to_billDetailsDialogFragment)
+    }
+
+    private fun onBillItemLongPressed(view: View, selectedIndex: Int) {
+        PopupMenu(requireContext(), view).apply {
+            setOnMenuItemClickListener {
+                Log.d("myDebug", "selected index: $selectedIndex")
+                true
+            }
+            inflate(R.menu.bill_menu)
+            show()
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.liuyuheng.handytools.repository
 
 import com.liuyuheng.common.extensions.round
 import com.liuyuheng.handytools.ui.AddBillPaymentDialogFragmentState
-import com.liuyuheng.handytools.ui.BillDetailsFragmentState
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
@@ -10,7 +9,6 @@ class BillCalculatorRepo {
 
     // local variables for sharing among fragments
     var addBillPaymentDialogFragmentState: AddBillPaymentDialogFragmentState = AddBillPaymentDialogFragmentState.AddBillPerson
-    var billDetailsFragmentState: BillDetailsFragmentState = BillDetailsFragmentState.AddBill
     var currentBillIndex: Int = 0
 
     // Persons string for displaying
@@ -23,71 +21,48 @@ class BillCalculatorRepo {
     private val billsListFlow = MutableSharedFlow<List<Bill>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST).apply { tryEmit(billsList) }
     fun getAllBillListFlow() = billsListFlow.asSharedFlow()
     fun getCurrentBillFlow() = getAllBillListFlow().map { billsList -> billsList[currentBillIndex]}
-    fun getCurrentBill() = billsListFlow.replayCache[0][currentBillIndex]
 
-    // New Bill for storing temporary data before adding to bills list
-    private val newBillFlow = MutableSharedFlow<Bill>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST).apply { tryEmit(Bill()) }
-    fun getNewBillFlow() = newBillFlow.asSharedFlow()
+    fun addNewBill(billName: String, totalCosts: Double) {
+        billsListFlow.tryEmit(billsList.apply { add(Bill(billName, totalCosts)) })
+    }
 
-    fun addEditBill(bill: Bill) {
-        when (billDetailsFragmentState) {
-            is BillDetailsFragmentState.AddBill -> billsListFlow.tryEmit(billsList.apply { add(bill) })
-            is BillDetailsFragmentState.EditBill -> billsListFlow.tryEmit(billsList.apply { set(currentBillIndex, bill) })
-        }
+    fun updateBill(updatedBill: Bill) {
+        billsListFlow.tryEmit(billsList.apply { set(currentBillIndex, updatedBill) })
     }
 
     fun addEditBillPerson(billPerson: BillPerson) {
-        when (billDetailsFragmentState) {
-            is BillDetailsFragmentState.AddBill -> {
-                newBillFlow.tryEmit(newBillFlow.replayCache[0].copy(billPersonList = newBillFlow.replayCache[0].billPersonList.apply {
-                    if (any { it.name == billPerson.name }) set(indexOfFirst { it.name == billPerson.name }, billPerson)
-                    else add(billPerson)
-                }))
-            }
-            is BillDetailsFragmentState.EditBill -> {
-                billsList[currentBillIndex].billPersonList.apply {
-                    if (any { it.name == billPerson.name }) set(indexOfFirst { it.name == billPerson.name }, billPerson)
-                    else add(billPerson)
-                }
-                billsListFlow.tryEmit(billsList)
-            }
+        val newList = billsListFlow.replayCache[0][currentBillIndex].billPersonList.toMutableList().apply {
+            if (any { it.name == billPerson.name }) set(indexOfFirst { it.name == billPerson.name }, billPerson)
+            else add(billPerson)
         }
+        billsListFlow.tryEmit(billsList.apply { this[currentBillIndex].billPersonList = newList })
     }
 
     fun deleteBillPerson(billPerson: BillPerson) {
-        when (billDetailsFragmentState) {
-            is BillDetailsFragmentState.AddBill -> {
-                newBillFlow.tryEmit(newBillFlow.replayCache[0].copy(billPersonList = newBillFlow.replayCache[0].billPersonList.apply {
-                    find { it.name == billPerson.name }?.let { remove(it) }
-                }))
-            }
-            is BillDetailsFragmentState.EditBill -> {
-                billsList[currentBillIndex].billPersonList.apply {
-                    find { it.name == billPerson.name }?.let { remove(it) }
-                }
-                billsListFlow.tryEmit(billsList)
-            }
+        val newList = billsListFlow.replayCache[0][currentBillIndex].billPersonList.toMutableList().apply {
+            find { it.name == billPerson.name }?.let { remove(it) }
         }
-    }
-
-    fun updateNewBillInfo(billName: String, totalCosts: Double) {
-//        billName?.run { newBillFlow.tryEmit(newBillFlow.replayCache[0].copy(name = billName)) }
-//        totalCosts?.run { newBillFlow.tryEmit(newBillFlow.replayCache[0].copy(totalCosts = totalCosts)) }
-        newBillFlow.tryEmit(newBillFlow.replayCache[0].copy(name = billName, totalCosts = totalCosts))
+        billsListFlow.tryEmit(billsList.apply { this[currentBillIndex].billPersonList = newList })
     }
 }
 
 data class Bill(
     val name: String = "",
     val totalCosts: Double = 0.0,
-    val billPersonList: MutableList<BillPerson> = mutableListOf()
+    var billPersonList: List<BillPerson> = emptyList()
 ) {
-    fun getTotalCostsString() = "$${String.format("%.2f", totalCosts.round(2))}"
+    fun getTotalCostsString(withDollarPrefix: Boolean = true): String {
+        val prefix = if(withDollarPrefix) "$" else ""
+        return "$prefix${String.format("%.2f", totalCosts.round(2))}"
+    }
 }
 
 data class BillPerson(
     val name: String = "",
     val paidAmount: Double = 0.0
 ) {
-    fun getPaidAmountString() = "$${String.format("%.2f", paidAmount.round(2))}"
+    fun getPaidAmountString(withDollarPrefix: Boolean = true): String {
+        val prefix = if(withDollarPrefix) "$" else ""
+        return "$prefix${String.format("%.2f", paidAmount.round(2))}"
+    }
 }
