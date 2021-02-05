@@ -1,63 +1,80 @@
 package com.liuyuheng.handytools.repository
 
 import com.liuyuheng.common.extensions.round
-import com.liuyuheng.handytools.ui.AddBillPaymentDialogFragmentState
+import com.liuyuheng.handytools.ui.AddItemPaymentDialogFragmentState
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
 class BillCalculatorRepo {
 
     // local variables for sharing among fragments
-    var addBillPaymentDialogFragmentState: AddBillPaymentDialogFragmentState = AddBillPaymentDialogFragmentState.AddBillPerson
-    var currentBillIndex: Int = 0
+    var addItemPaymentDialogFragmentState: AddItemPaymentDialogFragmentState = AddItemPaymentDialogFragmentState.AddItemPerson
+    var currentItemIndex: Int = 0
 
     // Persons string for displaying
-    private val personsStringFlow = MutableStateFlow("")
-    fun getPersonsStringFlow() = personsStringFlow.asStateFlow()
-    fun setPersonsString(string: String) { personsStringFlow.value = string }
+    private val nameListFlow = MutableStateFlow(emptyList<String>())
+    fun getNameListFlow() = nameListFlow.asStateFlow()
 
     // Bills stored in a list for display in recycler view
-    private val billsList = mutableListOf<Bill>()
-    private val billsListFlow = MutableSharedFlow<List<Bill>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST).apply { tryEmit(billsList) }
+    private val billsList = mutableListOf<BillItem>()
+    private val billsListFlow = MutableSharedFlow<List<BillItem>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_LATEST).apply { tryEmit(billsList) }
     fun getAllBillListFlow() = billsListFlow.asSharedFlow()
-    fun getCurrentBillFlow() = getAllBillListFlow().map { billsList -> billsList[currentBillIndex]}
+    fun getCurrentBillFlow() = getAllBillListFlow().map { billsList -> billsList[currentItemIndex]}
 
-    fun addNewBill(billName: String, totalCosts: Double) {
-        billsListFlow.tryEmit(billsList.apply { add(Bill(billName, totalCosts)) })
+    fun setPersonNames(string: String) {
+        nameListFlow.value = string.split(",").map { it.trim() }
     }
 
-    fun updateBill(updatedBill: Bill) {
-        billsListFlow.tryEmit(billsList.apply { set(currentBillIndex, updatedBill) })
+    fun addNewBillItem(billName: String, billCost: Double) {
+        billsListFlow.tryEmit(billsList.apply { add(BillItem(billName, billCost)) })
     }
 
-    fun addEditBillPerson(billPerson: BillPerson) {
-        val newList = billsListFlow.replayCache[0][currentBillIndex].billPersonList.toMutableList().apply {
-            if (any { it.name == billPerson.name }) set(indexOfFirst { it.name == billPerson.name }, billPerson)
-            else add(billPerson)
+    fun updateBillitem(updatedBillItem: BillItem) {
+        billsListFlow.tryEmit(billsList.apply { set(currentItemIndex, updatedBillItem) })
+    }
+
+    fun deleteBillItem(billIndex: Int) {
+        billsListFlow.tryEmit(billsList.apply { removeAt(billIndex) })
+    }
+
+    fun addEditItemPerson(billItemPerson: BillItemPerson) {
+        val newList = billsListFlow.replayCache[0][currentItemIndex].itemPersonList.toMutableList().apply {
+            if (any { it.name == billItemPerson.name }) set(indexOfFirst { it.name == billItemPerson.name }, billItemPerson)
+            else add(billItemPerson)
         }
-        billsListFlow.tryEmit(billsList.apply { this[currentBillIndex].billPersonList = newList })
+        billsListFlow.tryEmit(billsList.apply { this[currentItemIndex].itemPersonList = newList })
     }
 
-    fun deleteBillPerson(billPerson: BillPerson) {
-        val newList = billsListFlow.replayCache[0][currentBillIndex].billPersonList.toMutableList().apply {
-            find { it.name == billPerson.name }?.let { remove(it) }
+    fun deleteBillItemPerson(billItemPerson: BillItemPerson) {
+        val newList = billsListFlow.replayCache[0][currentItemIndex].itemPersonList.toMutableList().apply {
+            find { it.name == billItemPerson.name }?.let { remove(it) }
         }
-        billsListFlow.tryEmit(billsList.apply { this[currentBillIndex].billPersonList = newList })
+        billsListFlow.tryEmit(billsList.apply { this[currentItemIndex].itemPersonList = newList })
     }
+
+    fun filterExistingBillPersons(personNames: List<String>): List<String> {
+        val currentBillPersonsList = billsList[currentItemIndex].itemPersonList
+        return personNames.filterNot { personName -> currentBillPersonsList.any { billPerson -> billPerson.name == personName } }
+    }
+
+//    fun getBillSplittingResult(): String {
+//        val totalCosts = billsList.sumBy { (it.billCost * 100).toInt() }
+//        val costPerPerson = totalCosts.div()
+//    }
 }
 
-data class Bill(
+data class BillItem(
     val name: String = "",
-    val totalCosts: Double = 0.0,
-    var billPersonList: List<BillPerson> = emptyList()
+    val cost: Double = 0.0,
+    var itemPersonList: List<BillItemPerson> = emptyList()
 ) {
-    fun getTotalCostsString(withDollarPrefix: Boolean = true): String {
+    fun getItemCostString(withDollarPrefix: Boolean = true): String {
         val prefix = if(withDollarPrefix) "$" else ""
-        return "$prefix${String.format("%.2f", totalCosts.round(2))}"
+        return "$prefix${String.format("%.2f", cost.round(2))}"
     }
 }
 
-data class BillPerson(
+data class BillItemPerson(
     val name: String = "",
     val paidAmount: Double = 0.0
 ) {

@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.DialogFragmentAddBillBinding
-import com.liuyuheng.handytools.internal.utilValidateBillName
-import com.liuyuheng.handytools.internal.utilValidateTotalCosts
+import com.liuyuheng.handytools.databinding.DialogFragmentAddBillItemBinding
+import com.liuyuheng.handytools.internal.utilValidateItemName
+import com.liuyuheng.handytools.internal.utilValidateItemCost
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddBillDialogFragment: DialogFragment() {
+class AddBillItemDialogFragment: DialogFragment() {
 
-    private lateinit var binding: DialogFragmentAddBillBinding
+    private lateinit var binding: DialogFragmentAddBillItemBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_10dp)
-        binding = DialogFragmentAddBillBinding.inflate(inflater, container, false)
+        binding = DialogFragmentAddBillItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,17 +38,17 @@ class AddBillDialogFragment: DialogFragment() {
 
     private fun setupListeners() {
         binding.buttonDone.setOnClickListener {
-            val billName = binding.textInputLayoutBillName.editText?.text.toString()
-            val totalCosts = binding.textInputLayoutBillTotalCost.editText?.text.toString()
+            val billName = binding.textInputLayoutItemName.editText?.text.toString()
+            val billCost = binding.textInputLayoutItemCost.editText?.text.toString()
 
-            if (validateBillName(billName) and validateTotalCosts(totalCosts)) {
-                billCalculatorViewModel.addBill(billName, totalCosts.toDouble())
+            if (validateBillName(billName) and validateBillCost(billCost)) {
+                billCalculatorViewModel.addBillItem(billName, billCost.toDouble())
             }
             dismiss()
         }
         binding.buttonCancel.setOnClickListener { dismiss() }
     }
 
-    private fun validateBillName(billName: String) = utilValidateBillName(billName, binding.textInputLayoutBillName)
-    private fun validateTotalCosts(totalCosts: String) = utilValidateTotalCosts(totalCosts, binding.textInputLayoutBillTotalCost)
+    private fun validateBillName(billName: String) = utilValidateItemName(billName, binding.textInputLayoutItemName)
+    private fun validateBillCost(billCost: String) = utilValidateItemCost(billCost, binding.textInputLayoutItemCost)
 }

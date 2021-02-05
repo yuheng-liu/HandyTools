@@ -9,21 +9,21 @@ import android.widget.AutoCompleteTextView
 import androidx.fragment.app.DialogFragment
 import com.liuyuheng.common.extensions.visible
 import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.DialogFragmentAddBillPersonBinding
+import com.liuyuheng.handytools.databinding.DialogFragmentAddBillItemPersonBinding
 import com.liuyuheng.handytools.internal.utilValidatePaidAmount
 import com.liuyuheng.handytools.internal.utilValidatePerson
-import com.liuyuheng.handytools.repository.BillPerson
-import com.liuyuheng.handytools.ui.AddBillPaymentDialogFragmentState
+import com.liuyuheng.handytools.repository.BillItemPerson
+import com.liuyuheng.handytools.ui.AddItemPaymentDialogFragmentState
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddBillPersonDialogFragment: DialogFragment() {
+class AddBillItemPersonDialogFragment: DialogFragment() {
 
-    private lateinit var binding: DialogFragmentAddBillPersonBinding
+    private lateinit var binding: DialogFragmentAddBillItemPersonBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_10dp)
-        binding = DialogFragmentAddBillPersonBinding.inflate(inflater, container, false)
+        binding = DialogFragmentAddBillItemPersonBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,22 +44,21 @@ class AddBillPersonDialogFragment: DialogFragment() {
     }
 
     private fun setupUI() {
-        when (val fragmentState = billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-            is AddBillPaymentDialogFragmentState.AddBillPerson -> { /* default state for adding of new bill person */ }
-            is AddBillPaymentDialogFragmentState.EditBillPerson -> { // fragment can also be used for editing a current bill person
-                val currentBillPerson = fragmentState.billPerson
+        when (val fragmentState = billCalculatorViewModel.addItemPaymentDialogFragmentState) {
+            is AddItemPaymentDialogFragmentState.AddItemPerson -> { /* default state for adding of new bill person */ }
+            is AddItemPaymentDialogFragmentState.EditItemPerson -> { // fragment can also be used for editing a current bill person
+                val currentBillItemPerson = fragmentState.billItemPerson
                 binding.buttonDelete.visible()
-                binding.textInputLayoutPersonSpinner.editText?.setText(currentBillPerson.name)
-                binding.textInputLayoutPaidAmount.editText?.setText(currentBillPerson.paidAmount.toString())
+                binding.textInputLayoutPersonSpinner.editText?.setText(currentBillItemPerson.name)
+                binding.textInputLayoutPaidAmount.editText?.setText(currentBillItemPerson.paidAmount.toString())
                 binding.textInputLayoutPersonSpinner.isEnabled = false
             }
         }
     }
 
     private fun setupObservers() {
-        billCalculatorViewModel.getPersonsStringLiveData().observe(viewLifecycleOwner) { personsString ->
-            val list = personsString.split(",").map { it.trim() }
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, list)
+        billCalculatorViewModel.getNameListLiveData().observe(viewLifecycleOwner) { nameList ->
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, billCalculatorViewModel.filterExistingBillPersons(nameList))
             (binding.textInputLayoutPersonSpinner.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         }
     }
@@ -68,17 +67,17 @@ class AddBillPersonDialogFragment: DialogFragment() {
         binding.buttonDone.setOnClickListener {
             val personName = binding.textInputLayoutPersonSpinner.editText?.text.toString()
             val paidAmount = binding.textInputLayoutPaidAmount.editText?.text.toString()
-            val billPerson = BillPerson(personName, if (paidAmount.isNotBlank()) paidAmount.toDouble() else 0.0)
+            val billItemPerson = BillItemPerson(personName, if (paidAmount.isNotBlank()) paidAmount.toDouble() else 0.0)
 
-            if (validatePerson(personName) and validatePaidAmount(paidAmount)) {
-                billCalculatorViewModel.addEditBillPerson(billPerson)
+            if (validateItemPerson(personName) and validatePaidAmount(paidAmount)) {
+                billCalculatorViewModel.addEditItemPerson(billItemPerson)
                 dismiss()
             }
         }
         binding.buttonDelete.setOnClickListener {
-            when (val fragmentState = billCalculatorViewModel.addBillPaymentDialogFragmentState) {
-                is AddBillPaymentDialogFragmentState.EditBillPerson -> {
-                    billCalculatorViewModel.deleteCurrentBillPerson(fragmentState.billPerson)
+            when (val fragmentState = billCalculatorViewModel.addItemPaymentDialogFragmentState) {
+                is AddItemPaymentDialogFragmentState.EditItemPerson -> {
+                    billCalculatorViewModel.deleteCurrentItemPerson(fragmentState.billItemPerson)
                     dismiss()
                 }
             }
@@ -86,7 +85,7 @@ class AddBillPersonDialogFragment: DialogFragment() {
         binding.buttonCancel.setOnClickListener { dismiss() }
     }
 
-    private fun validatePerson(personName: String) = utilValidatePerson(personName, binding.textInputLayoutPersonSpinner)
+    private fun validateItemPerson(personName: String) = utilValidatePerson(personName, binding.textInputLayoutPersonSpinner)
     private fun validatePaidAmount(paidAmount: String) = utilValidatePaidAmount(paidAmount, binding.textInputLayoutPaidAmount)
 }
 

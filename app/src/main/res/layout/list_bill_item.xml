@@ -14,24 +14,24 @@
         android:paddingHorizontal="@dimen/default_layout_spacing">
 
         <TextView
-            android:id="@+id/textView_bill_name"
+            android:id="@+id/textView_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Bill 1 (Cakes)"
+            tools:text="Item 1 (Cakes)"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView_bill_total_costs"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_item_cost"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView_bill_total_costs"
+            android:id="@+id/text_view_item_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="$65.10"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/textView_bill_name"
+            app:layout_constraintStart_toEndOf="@id/textView_item_name"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
@@ -42,7 +42,7 @@
             tools:text="Yuheng\nKeyun\nAndy"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@+id/textView_bill_name"
+            app:layout_constraintTop_toBottomOf="@+id/textView_item_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/textView_payments_person_paid_amount"/>
 
@@ -54,10 +54,9 @@
             tools:text="$12.30\n$8.10\n$15.80"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/textView_bill_total_costs"
+            app:layout_constraintTop_toBottomOf="@id/text_view_item_cost"
             app:layout_constraintStart_toEndOf="@id/textView_payments_person_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

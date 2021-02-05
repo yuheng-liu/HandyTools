@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.DialogFragmentAddEditPersonBinding
+import com.liuyuheng.handytools.databinding.DialogFragmentAddEditItemPersonBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddEditPersonDialogFragment: DialogFragment() {
+class AddEditItemPersonDialogFragment: DialogFragment() {
 
-    private lateinit var binding: DialogFragmentAddEditPersonBinding
+    private lateinit var binding: DialogFragmentAddEditItemPersonBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // set dialog background here, dialogs have their own window
         dialog?.window?.setBackgroundDrawableResource(R.drawable.bg_rounded_10dp)
-        binding = DialogFragmentAddEditPersonBinding.inflate(inflater, container, false)
+        binding = DialogFragmentAddEditItemPersonBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,8 +37,9 @@ class AddEditPersonDialogFragment: DialogFragment() {
     }
 
     private fun setupObservers() {
-        billCalculatorViewModel.getPersonsStringLiveData().observe(viewLifecycleOwner) { personsString ->
-            if (personsString.isNotBlank()) binding.textInputLayoutPersonNames.editText?.setText(personsString)
+        billCalculatorViewModel.getNameListLiveData().observe(viewLifecycleOwner) { nameList ->
+            val text = nameList.joinToString(", ")
+            binding.textInputLayoutPersonNames.editText?.setText(text)
         }
     }
 

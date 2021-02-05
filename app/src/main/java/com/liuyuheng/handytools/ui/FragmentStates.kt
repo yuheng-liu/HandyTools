@@ -1,8 +1,8 @@
 package com.liuyuheng.handytools.ui
 
-import com.liuyuheng.handytools.repository.BillPerson
+import com.liuyuheng.handytools.repository.BillItemPerson
 
-sealed class AddBillPaymentDialogFragmentState {
-    object AddBillPerson: AddBillPaymentDialogFragmentState()
-    data class EditBillPerson(val billPerson: BillPerson): AddBillPaymentDialogFragmentState()
+sealed class AddItemPaymentDialogFragmentState {
+    object AddItemPerson: AddItemPaymentDialogFragmentState()
+    data class EditItemPerson(val billItemPerson: BillItemPerson): AddItemPaymentDialogFragmentState()
 }

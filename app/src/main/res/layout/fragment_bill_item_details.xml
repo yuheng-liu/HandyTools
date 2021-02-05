@@ -5,15 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/default_layout_spacing"
-    tools:ignore="labelFor">
+    android:padding="@dimen/default_margin_padding">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_bill_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/textInputLayout_item_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Bill Name"
+        android:hint="Item Name"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,18 +24,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_bill_total_cost"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/text_input_layout_item_cost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_layout_spacing"
-        android:hint="Total Costs ($.cents)"
+        android:hint="Item Cost ($.cents)"
         app:errorEnabled="true"
         app:prefixText="$"
         app:placeholderText="00.00"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_name">
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_item_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -46,24 +43,35 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button_done"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_add_item_person"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
-        android:text="Done"
+        android:text="Add Item Person"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_bill_total_cost"/>
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout_item_cost" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_item_persons_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/small_layout_spacing"
+        android:paddingVertical="@dimen/minor_layout_spacing"
+        android:paddingHorizontal="@dimen/minor_layout_spacing"
+        android:background="@drawable/bg_rounded_bordered"
+        tools:listitem="@layout/list_bill_item_person"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_add_item_person"
+        app:layout_constraintBottom_toTopOf="@id/button_done"/>
 
     <Button
-        android:id="@+id/button_cancel"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_done"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_layout_spacing"
-        android:text="Cancel"
-        app:layout_constraintTop_toTopOf="@id/button_done"
-        app:layout_constraintBottom_toBottomOf="@id/button_done"
-        app:layout_constraintEnd_toStartOf="@id/button_done"/>
+        android:text="Update"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

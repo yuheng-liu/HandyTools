@@ -11,14 +11,17 @@
         android:label="Bill Calculator"
         tools:layout="@layout/fragment_bill_calculator">
         <action
-            android:id="@+id/action_billCalculatorFragment_to_billDetailsDialogFragment"
-            app:destination="@id/billDetailsFragment" />
+            android:id="@+id/action_billCalculatorFragment_to_billItemDetailsDialogFragment"
+            app:destination="@id/billItemDetailsFragment" />
         <action
-            android:id="@+id/action_billCalculatorFragment_to_addEditPersonDialogFragment"
-            app:destination="@id/addEditPersonDialogFragment" />
+            android:id="@+id/action_billCalculatorFragment_to_addEditItemPersonDialogFragment"
+            app:destination="@id/addEditItemPersonDialogFragment" />
         <action
-            android:id="@+id/action_billCalculatorFragment_to_addBillDialogFragment"
-            app:destination="@id/addBillDialogFragment" />
+            android:id="@+id/action_billCalculatorFragment_to_addBillItemDialogFragment"
+            app:destination="@id/addBillItemDialogFragment" />
+        <action
+            android:id="@+id/action_billCalculatorFragment_to_billSplittingFragment"
+            app:destination="@id/billSplittingFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -26,31 +29,33 @@
         android:label="Welcome to Handy Tools!"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_billTypeFragment"
+            android:id="@+id/action_homeFragment_to_billCalculatorFragment"
             app:destination="@id/billCalculatorFragment" />
     </fragment>
     <fragment
-        android:id="@+id/billDetailsFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.BillDetailsFragment"
-        android:label="Bill Details"
-        tools:layout="@layout/fragment_bill_details">
+        android:id="@+id/billItemDetailsFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.BillItemDetailsFragment"
+        android:label="Bill Item Details"
+        tools:layout="@layout/fragment_bill_item_details">
         <action
-            android:id="@+id/action_billDetailsFragment_to_addBillPaymentDialogFragment"
-            app:destination="@id/addBillPersonDialogFragment" />
+            android:id="@+id/action_billItemDetailsFragment_to_addItemPaymentDialogFragment"
+            app:destination="@id/addBillItemPersonDialogFragment" />
     </fragment>
     <dialog
-        android:id="@+id/addEditPersonDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditPersonDialogFragment"
-        android:label="AddEditPersonDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_edit_person"/>
+        android:id="@+id/addEditItemPersonDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditItemPersonDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_edit_item_person"/>
     <dialog
-        android:id="@+id/addBillPersonDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillPersonDialogFragment"
-        android:label="AddBillPersonDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_bill_person"/>
+        android:id="@+id/addBillItemPersonDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemPersonDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_bill_item_person"/>
     <dialog
-        android:id="@+id/addBillDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillDialogFragment"
-        android:label="AddBillDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_bill"/>
+        android:id="@+id/addBillItemDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemDialogFragment"
+        tools:layout="@layout/dialog_fragment_add_bill_item"/>
+    <fragment
+        android:id="@+id/billSplittingFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.BillSplittingFragment"
+        android:label="Bill Splitting"
+        tools:layout="@layout/fragment_bill_splitting"/>
 </navigation>

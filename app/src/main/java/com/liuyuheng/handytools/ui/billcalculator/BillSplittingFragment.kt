@@ -1,20 +1,20 @@
-package com.liuyuheng.handytools.ui
+package com.liuyuheng.handytools.ui.billcalculator
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import com.liuyuheng.handytools.R
-import com.liuyuheng.handytools.databinding.FragmentHomeBinding
+import com.liuyuheng.handytools.databinding.FragmentBillSplittingBinding
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class BillSplittingFragment: Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentBillSplittingBinding
+    private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentBillSplittingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -25,6 +25,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.buttonBillCalculator.setOnClickListener { findNavController(this).navigate(R.id.action_homeFragment_to_billCalculatorFragment) }
+        binding.buttonCompute.setOnClickListener {
+
+        }
     }
 }

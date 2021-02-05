@@ -1,7 +1,6 @@
 package com.liuyuheng.handytools.ui.billcalculator
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentBillCalculatorBinding
 import com.liuyuheng.handytools.internal.navigate
-import com.liuyuheng.handytools.repository.Bill
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class BillCalculatorFragment : Fragment() {
@@ -17,7 +15,7 @@ class BillCalculatorFragment : Fragment() {
     private lateinit var binding: FragmentBillCalculatorBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
-    private lateinit var billsListAdapter: BillsAdapter
+    private lateinit var itemsListAdapter: ItemsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBillCalculatorBinding.inflate(inflater, container, false)
@@ -33,38 +31,40 @@ class BillCalculatorFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        billsListAdapter = BillsAdapter ({ bill -> onBillItemPressed(bill) }, { view, selectedIndex -> onBillItemLongPressed(view, selectedIndex) })
-        binding.recyclerViewBills.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewBills.adapter = billsListAdapter
+        itemsListAdapter = ItemsAdapter ({ item -> onItemPressed(item) }, { view, selectedIndex -> onItemLongPressed(view, selectedIndex) })
+        binding.recyclerViewItems.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewItems.adapter = itemsListAdapter
     }
 
     private fun setupObservers() {
-        billCalculatorViewModel.getPersonsStringLiveData().observe(viewLifecycleOwner) { personsString ->
-            binding.textViewCurrentPersonsValue.text = personsString
-            binding.buttonAddBill.isEnabled = personsString.isNotBlank()
+        billCalculatorViewModel.getNameListLiveData().observe(viewLifecycleOwner) { nameList ->
+            binding.textViewCurrentPersonsValue.text = nameList.joinToString(", ")
+            binding.buttonAddItem.isEnabled = nameList.isNotEmpty()
         }
-        billCalculatorViewModel.getAllBillListLiveData().observe(viewLifecycleOwner) { billsList ->
-            billsListAdapter.submitList(billsList)
+        billCalculatorViewModel.getAllBillItemListLiveData().observe(viewLifecycleOwner) { itemList ->
+            itemsListAdapter.submitList(itemList)
+            binding.buttonNextStep.isEnabled = itemList.isNotEmpty()
         }
     }
 
     private fun setupListeners() {
-        binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addEditPersonDialogFragment) }
-        binding.buttonAddBill.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addBillDialogFragment) }
+        binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addEditItemPersonDialogFragment) }
+        binding.buttonAddItem.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addBillItemDialogFragment) }
+        binding.buttonNextStep.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_billSplittingFragment) }
     }
 
-    private fun onBillItemPressed(index: Int) {
-        billCalculatorViewModel.currentBillIndex = index
-        navigate(R.id.action_billCalculatorFragment_to_billDetailsDialogFragment)
+    private fun onItemPressed(index: Int) {
+        billCalculatorViewModel.currentItemIndex = index
+        navigate(R.id.action_billCalculatorFragment_to_billItemDetailsDialogFragment)
     }
 
-    private fun onBillItemLongPressed(view: View, selectedIndex: Int) {
+    private fun onItemLongPressed(view: View, selectedIndex: Int) {
         PopupMenu(requireContext(), view).apply {
             setOnMenuItemClickListener {
-                Log.d("myDebug", "selected index: $selectedIndex")
+                billCalculatorViewModel.deleteBillItem(selectedIndex)
                 true
             }
-            inflate(R.menu.bill_menu)
+            inflate(R.menu.bill_item_menu)
             show()
         }
     }
