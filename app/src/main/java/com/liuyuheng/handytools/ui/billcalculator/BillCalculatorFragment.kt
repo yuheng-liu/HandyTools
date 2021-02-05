@@ -15,7 +15,7 @@ class BillCalculatorFragment : Fragment() {
     private lateinit var binding: FragmentBillCalculatorBinding
     private val billCalculatorViewModel: BillCalculatorViewModel by viewModel()
 
-    private lateinit var itemsListAdapter: ItemsAdapter
+    private lateinit var billItemsAdapter: BillItemsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBillCalculatorBinding.inflate(inflater, container, false)
@@ -31,9 +31,9 @@ class BillCalculatorFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        itemsListAdapter = ItemsAdapter ({ item -> onItemPressed(item) }, { view, selectedIndex -> onItemLongPressed(view, selectedIndex) })
+        billItemsAdapter = BillItemsAdapter ({ item -> onItemPressed(item) }, { view, selectedIndex -> onItemLongPressed(view, selectedIndex) })
         binding.recyclerViewItems.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewItems.adapter = itemsListAdapter
+        binding.recyclerViewItems.adapter = billItemsAdapter
     }
 
     private fun setupObservers() {
@@ -42,7 +42,7 @@ class BillCalculatorFragment : Fragment() {
             binding.buttonAddItem.isEnabled = nameList.isNotEmpty()
         }
         billCalculatorViewModel.getAllBillItemListLiveData().observe(viewLifecycleOwner) { itemList ->
-            itemsListAdapter.submitList(itemList)
+            billItemsAdapter.submitList(itemList)
             binding.buttonNextStep.isEnabled = itemList.isNotEmpty()
         }
     }

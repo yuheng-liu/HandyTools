@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.liuyuheng.handytools.databinding.ListBillItemBinding
 import com.liuyuheng.handytools.repository.BillItem
 
-class ItemsAdapter(
+class BillItemsAdapter(
     private val itemListener: (Int) -> Unit,
     private val onLongClickListener: (View, Int) -> Unit
-): ListAdapter<BillItem, ItemsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
+): ListAdapter<BillItem, BillItemsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillItemViewHolder {
         return BillItemViewHolder(ListBillItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
