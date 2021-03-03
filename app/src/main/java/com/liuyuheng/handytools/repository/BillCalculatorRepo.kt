@@ -4,6 +4,7 @@ import com.liuyuheng.common.extensions.round
 import com.liuyuheng.handytools.ui.AddItemPaymentDialogFragmentState
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlin.math.absoluteValue
 
 class BillCalculatorRepo {
 
@@ -29,7 +30,7 @@ class BillCalculatorRepo {
         billsListFlow.tryEmit(billsList.apply { add(BillItem(billName, billCost)) })
     }
 
-    fun updateBillitem(updatedBillItem: BillItem) {
+    fun updateBillItem(updatedBillItem: BillItem) {
         billsListFlow.tryEmit(billsList.apply { set(currentItemIndex, updatedBillItem) })
     }
 
@@ -57,10 +58,39 @@ class BillCalculatorRepo {
         return personNames.filterNot { personName -> currentBillPersonsList.any { billPerson -> billPerson.name == personName } }
     }
 
-//    fun getBillSplittingResult(): String {
-//        val totalCosts = billsList.sumBy { (it.billCost * 100).toInt() }
-//        val costPerPerson = totalCosts.div()
-//    }
+    /**
+     * Full logic of calculating how much each person should pay or receive
+     */
+    fun getBillSplittingResult(): String {
+        val totalCosts = billsList.sumBy { (it.cost * 100).toInt() }
+        val numberOfPersons = nameListFlow.value.size
+        val costPerPerson = totalCosts.div(numberOfPersons)
+
+        var resultString = ""
+
+        nameListFlow.value.forEach { personName ->
+            var cumulativePaid = 0
+            billsList.forEach { billItem ->
+                billItem.itemPersonList.find { billItemPerson -> billItemPerson.name == personName }?.let { billItemPerson ->
+                    cumulativePaid += (billItemPerson.paidAmount * 100).toInt()
+                }
+            }
+            resultString += "$personName ${getResultString(cumulativePaid, costPerPerson)}"
+        }
+
+        return resultString
+    }
+
+    private fun getResultString(paidAmount: Int, costPerPerson: Int): String {
+        val difAmount = paidAmount - costPerPerson
+
+        return when {
+            difAmount > 0 -> "receives $${String.format("%.2f", (difAmount.absoluteValue/100.0).round(2))}\n"
+            difAmount == 0 -> "breaks even\n"
+            difAmount < 0 -> "pays $${String.format("%.2f", (difAmount.absoluteValue/100.0).round(2))}\n"
+            else -> ""
+        }
+    }
 }
 
 data class BillItem(

@@ -20,8 +20,8 @@
             android:id="@+id/action_billCalculatorFragment_to_addBillItemDialogFragment"
             app:destination="@id/addBillItemDialogFragment" />
         <action
-            android:id="@+id/action_billCalculatorFragment_to_billSplittingFragment"
-            app:destination="@id/billSplittingFragment" />
+            android:id="@+id/action_billCalculatorFragment_to_billResultDialogFragment"
+            app:destination="@id/billResultDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -53,9 +53,8 @@
         android:id="@+id/addBillItemDialogFragment"
         android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemDialogFragment"
         tools:layout="@layout/dialog_fragment_add_bill_item"/>
-    <fragment
-        android:id="@+id/billSplittingFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.BillSplittingFragment"
-        android:label="Bill Splitting"
-        tools:layout="@layout/fragment_bill_splitting"/>
+    <dialog
+        android:id="@+id/billResultDialogFragment"
+        android:name="com.liuyuheng.handytools.ui.billcalculator.BillResultDialogFragment"
+        tools:layout="@layout/dialog_fragment_bill_result"/>
 </navigation>

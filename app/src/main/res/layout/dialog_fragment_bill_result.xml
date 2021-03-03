@@ -11,19 +11,10 @@
         android:id="@+id/textView_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Yuheng will receive $20\nKeyun need to pay $20"
+        tools:text="Yuheng receives $20\nKeyun pays $20"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
-        android:id="@+id/button_compute"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Compute"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

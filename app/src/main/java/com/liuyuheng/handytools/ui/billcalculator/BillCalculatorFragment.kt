@@ -43,14 +43,14 @@ class BillCalculatorFragment : Fragment() {
         }
         billCalculatorViewModel.getAllBillItemListLiveData().observe(viewLifecycleOwner) { itemList ->
             billItemsAdapter.submitList(itemList)
-            binding.buttonNextStep.isEnabled = itemList.isNotEmpty()
+            binding.buttonCompute.isEnabled = itemList.isNotEmpty()
         }
     }
 
     private fun setupListeners() {
         binding.buttonAddPerson.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addEditItemPersonDialogFragment) }
         binding.buttonAddItem.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_addBillItemDialogFragment) }
-        binding.buttonNextStep.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_billSplittingFragment) }
+        binding.buttonCompute.setOnClickListener { navigate(R.id.action_billCalculatorFragment_to_billResultDialogFragment) }
     }
 
     private fun onItemPressed(index: Int) {

@@ -56,15 +56,15 @@
         android:background="@drawable/bg_rounded_bordered"
         tools:listitem="@layout/list_bill_item"
         app:layout_constraintTop_toBottomOf="@id/button_add_item"
-        app:layout_constraintBottom_toTopOf="@id/button_next_step"
+        app:layout_constraintBottom_toTopOf="@id/button_compute"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
-        android:id="@+id/button_next_step"
+        android:id="@+id/button_compute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next Step"
+        android:text="Compute"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
