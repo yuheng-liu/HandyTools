@@ -46,6 +46,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_current_persons_value"/>
 
+    <TextView
+        android:id="@+id/textView_add_item_instructions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1. First add an item that needs to be calculated for bill splitting.\n2.Click on each item card to add information on how much each person contributed to each item.\n3. Press and hold on item card to delete. "        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:lineSpacingExtra="2sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_add_item"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_items"
         android:layout_width="match_parent"
@@ -55,7 +65,7 @@
         android:paddingHorizontal="@dimen/minor_layout_spacing"
         android:background="@drawable/bg_rounded_bordered"
         tools:listitem="@layout/list_bill_item"
-        app:layout_constraintTop_toBottomOf="@id/button_add_item"
+        app:layout_constraintTop_toBottomOf="@id/textView_add_item_instructions"
         app:layout_constraintBottom_toTopOf="@id/button_compute"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

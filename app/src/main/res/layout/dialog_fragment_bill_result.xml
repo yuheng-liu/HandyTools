@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         tools:text="Yuheng receives $20\nKeyun pays $20"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:lineSpacingExtra="4sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
