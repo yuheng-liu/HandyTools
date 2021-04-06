@@ -6,55 +6,66 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/billCalculatorFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
-        android:label="Bill Calculator"
-        tools:layout="@layout/fragment_bill_calculator">
-        <action
-            android:id="@+id/action_billCalculatorFragment_to_billItemDetailsDialogFragment"
-            app:destination="@id/billItemDetailsFragment" />
-        <action
-            android:id="@+id/action_billCalculatorFragment_to_addEditItemPersonDialogFragment"
-            app:destination="@id/addEditItemPersonDialogFragment" />
-        <action
-            android:id="@+id/action_billCalculatorFragment_to_addBillItemDialogFragment"
-            app:destination="@id/addBillItemDialogFragment" />
-        <action
-            android:id="@+id/action_billCalculatorFragment_to_billResultDialogFragment"
-            app:destination="@id/billResultDialogFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.liuyuheng.handytools.ui.HomeFragment"
         android:label="Welcome to Handy Tools!"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_billCalculatorFragment"
-            app:destination="@id/billCalculatorFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/billItemDetailsFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.BillItemDetailsFragment"
-        android:label="Bill Item Details"
-        tools:layout="@layout/fragment_bill_item_details">
+            app:destination="@id/bill_calculator_graph" />
         <action
-            android:id="@+id/action_billItemDetailsFragment_to_addItemPaymentDialogFragment"
-            app:destination="@id/addBillItemPersonDialogFragment" />
+            android:id="@+id/action_homeFragment_to_triviaFragment"
+            app:destination="@id/triviaFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/addEditItemPersonDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditItemPersonDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_edit_item_person"/>
-    <dialog
-        android:id="@+id/addBillItemPersonDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemPersonDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_bill_item_person"/>
-    <dialog
-        android:id="@+id/addBillItemDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemDialogFragment"
-        tools:layout="@layout/dialog_fragment_add_bill_item"/>
-    <dialog
-        android:id="@+id/billResultDialogFragment"
-        android:name="com.liuyuheng.handytools.ui.billcalculator.BillResultDialogFragment"
-        tools:layout="@layout/dialog_fragment_bill_result"/>
+    <navigation android:id="@+id/bill_calculator_graph"
+        app:startDestination="@id/billCalculatorFragment">
+        <dialog
+            android:id="@+id/addBillItemDialogFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemDialogFragment"
+            tools:layout="@layout/dialog_fragment_add_bill_item" />
+        <dialog
+            android:id="@+id/addBillItemPersonDialogFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.AddBillItemPersonDialogFragment"
+            tools:layout="@layout/dialog_fragment_add_bill_item_person" />
+        <fragment
+            android:id="@+id/billItemDetailsFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.BillItemDetailsFragment"
+            android:label="Bill Item Details"
+            tools:layout="@layout/fragment_bill_item_details">
+            <action
+                android:id="@+id/action_billItemDetailsFragment_to_addItemPaymentDialogFragment"
+                app:destination="@id/addBillItemPersonDialogFragment" />
+        </fragment>
+        <dialog
+            android:id="@+id/addEditItemPersonDialogFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.AddEditItemPersonDialogFragment"
+            tools:layout="@layout/dialog_fragment_add_edit_item_person" />
+        <fragment
+            android:id="@+id/billCalculatorFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.BillCalculatorFragment"
+            android:label="Bill Calculator"
+            tools:layout="@layout/fragment_bill_calculator">
+            <action
+                android:id="@+id/action_billCalculatorFragment_to_billItemDetailsDialogFragment"
+                app:destination="@id/billItemDetailsFragment" />
+            <action
+                android:id="@+id/action_billCalculatorFragment_to_addEditItemPersonDialogFragment"
+                app:destination="@id/addEditItemPersonDialogFragment" />
+            <action
+                android:id="@+id/action_billCalculatorFragment_to_addBillItemDialogFragment"
+                app:destination="@id/addBillItemDialogFragment" />
+            <action
+                android:id="@+id/action_billCalculatorFragment_to_billResultDialogFragment"
+                app:destination="@id/billResultDialogFragment" />
+        </fragment>
+        <dialog
+            android:id="@+id/billResultDialogFragment"
+            android:name="com.liuyuheng.handytools.ui.billcalculator.BillResultDialogFragment"
+            tools:layout="@layout/dialog_fragment_bill_result" />
+    </navigation>
+    <fragment
+        android:id="@+id/triviaFragment"
+        android:name="com.liuyuheng.handytools.ui.trivia.TriviaFragment"
+        android:label="Trivia"
+        tools:layout="@layout/fragment_trivia"/>
 </navigation>

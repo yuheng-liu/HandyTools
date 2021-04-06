@@ -1,14 +1,19 @@
 package com.liuyuheng.handytools
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.liuyuheng.handytools.databinding.ActivityMainBinding
+import com.liuyuheng.handytools.network.retrofit.interceptor.ApiCallState
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val mainActivitySharedViewModel by viewModel<MainActivitySharedViewModel>()
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
@@ -20,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         setupNavigation()
         setupListeners()
+        setupObservers()
     }
 
     private fun setupNavigation() { // attaching view components to view variables
@@ -39,6 +45,16 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 // TODO add more navigation destinations here
                 else -> true
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        mainActivitySharedViewModel.getApiStateLiveData().observe(this) { apiCallState ->
+            when (apiCallState) {
+                ApiCallState.Idle -> Log.d("myDebug", "api call state: IDLE")
+                ApiCallState.Waiting -> Log.d("myDebug", "api call state: WAITING")
+                ApiCallState.Completed -> Log.d("myDebug", "api call state: COMPLETED")
             }
         }
     }

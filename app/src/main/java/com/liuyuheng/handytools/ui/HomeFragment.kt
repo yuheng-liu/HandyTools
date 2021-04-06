@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentHomeBinding
+import com.liuyuheng.handytools.internal.navigate
 
 class HomeFragment : Fragment() {
 
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.buttonBillCalculator.setOnClickListener { findNavController(this).navigate(R.id.action_homeFragment_to_billCalculatorFragment) }
+        binding.buttonBillCalculator.setOnClickListener { navigate(R.id.action_homeFragment_to_billCalculatorFragment) }
+        binding.buttonTrivia.setOnClickListener { navigate(R.id.action_homeFragment_to_triviaFragment) }
     }
 }
