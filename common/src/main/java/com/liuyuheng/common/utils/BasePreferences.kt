@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 
-private const val DEFAULT = "DEFAULT"
+private const val DEFAULT = "default"
 
 abstract class BasePreferences(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(DEFAULT, Context.MODE_PRIVATE)
@@ -37,29 +37,19 @@ abstract class BasePreferences(context: Context) {
      *  load from shared preferences
      */
     fun loadInt(key: String, defValue: Int): Int = sharedPreferences.getInt(key, defValue)
-    fun loadInt(key: String, defValue: String): String = sharedPreferences.getString(key, defValue) ?: ""
-    fun loadInt(key: String, defValue: Boolean): Boolean = sharedPreferences.getBoolean(key, defValue)
-    fun loadInt(key: String, defValue: Float): Float = sharedPreferences.getFloat(key, defValue)
-    fun loadInt(key: String, defValue: Long): Long = sharedPreferences.getLong(key, defValue)
+    fun loadString(key: String, defValue: String): String = sharedPreferences.getString(key, defValue) ?: ""
+    fun loadBoolean(key: String, defValue: Boolean): Boolean = sharedPreferences.getBoolean(key, defValue)
+    fun loadFloat(key: String, defValue: Float): Float = sharedPreferences.getFloat(key, defValue)
+    fun loadLong(key: String, defValue: Long): Long = sharedPreferences.getLong(key, defValue)
 
     /*
      *  load from shared preference as liveData
      */
-    fun loadIntLiveData(key: String, defValue: Int): LiveData<Int> {
-        return sharedPreferences.intLiveData(key, defValue)
-    }
-    fun loadStringLiveData(key: String, defValue: String): LiveData<String> {
-        return sharedPreferences.stringLiveData(key, defValue)
-    }
-    fun loadBooleanLiveData(key: String, defValue: Boolean): LiveData<Boolean> {
-        return sharedPreferences.booleanLiveData(key, defValue)
-    }
-    fun loadFloatLiveData(key: String, defValue: Float): LiveData<Float> {
-        return sharedPreferences.floatLiveData(key, defValue)
-    }
-    fun loadLongLiveData(key: String, defValue: Long): LiveData<Long> {
-        return sharedPreferences.longLiveData(key, defValue)
-    }
+    fun loadIntLiveData(key: String, defValue: Int): LiveData<Int> = sharedPreferences.intLiveData(key, defValue)
+    fun loadStringLiveData(key: String, defValue: String): LiveData<String> = sharedPreferences.stringLiveData(key, defValue)
+    fun loadBooleanLiveData(key: String, defValue: Boolean): LiveData<Boolean> = sharedPreferences.booleanLiveData(key, defValue)
+    fun loadFloatLiveData(key: String, defValue: Float): LiveData<Float> = sharedPreferences.floatLiveData(key, defValue)
+    fun loadLongLiveData(key: String, defValue: Long): LiveData<Long> = sharedPreferences.longLiveData(key, defValue)
 
     /*
      *  delete from shared preferences

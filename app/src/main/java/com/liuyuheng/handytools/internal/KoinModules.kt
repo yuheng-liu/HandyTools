@@ -7,6 +7,7 @@ import com.liuyuheng.handytools.network.retrofit.RetrofitServiceBuilder
 import com.liuyuheng.handytools.network.retrofit.interceptor.NetworkActivityInterceptor
 import com.liuyuheng.handytools.repository.BillCalculatorRepo
 import com.liuyuheng.handytools.repository.TriviaRepo
+import com.liuyuheng.handytools.storage.preferences.OpenTrivialSharedPreference
 import com.liuyuheng.handytools.ui.billcalculator.BillCalculatorViewModel
 import com.liuyuheng.handytools.ui.trivia.TriviaViewModel
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +21,7 @@ object KoinModules {
         // Android context
         androidContext(context)
         // modules
-        modules(listOf(uiModules, repoModules, networkModules))
+        modules(listOf(uiModules, repoModules, networkModules, storageModules))
     }
 
     private val uiModules = module {
@@ -31,7 +32,7 @@ object KoinModules {
     
     private val repoModules = module {
         single { BillCalculatorRepo() }
-        single { TriviaRepo(get()) }
+        single { TriviaRepo(get(), get()) }
     }
 
     private val networkModules = module {
@@ -39,5 +40,9 @@ object KoinModules {
         single { RetrofitServiceBuilder(get()) }
         single { NetworkActivityInterceptor(get()) }
         single { OpenTriviaDatabaseDataSource(get()) }
+    }
+
+    private val storageModules = module {
+        single { OpenTrivialSharedPreference(get()) }
     }
 }

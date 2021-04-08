@@ -3,15 +3,27 @@ package com.liuyuheng.handytools.repository
 import android.util.Log
 import com.liuyuheng.handytools.network.datasource.DataSourceResult
 import com.liuyuheng.handytools.network.datasource.OpenTriviaDatabaseDataSource
+import com.liuyuheng.handytools.network.models.outgoing.OpenTriviaQuestionQuery
+import com.liuyuheng.handytools.storage.preferences.OpenTrivialSharedPreference
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class TriviaRepo(private val openTriviaDatabaseDataSource: OpenTriviaDatabaseDataSource) {
+class TriviaRepo(
+    private val openTriviaDatabaseDataSource: OpenTriviaDatabaseDataSource,
+    private val trivialSharedPreference: OpenTrivialSharedPreference
+) {
 
     private var triviaCategoryList = emptyList<TriviaCategory>()
     private val triviaCategoryListFlow = MutableSharedFlow<List<TriviaCategory>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST).apply { tryEmit(triviaCategoryList) }
     fun getTriviaCategoryListFlow() = triviaCategoryListFlow.asSharedFlow()
+
+    private val triviaQuestionListFlow = MutableSharedFlow<List<TriviaQuestion>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    fun getTriviaQuestionListFlow() = triviaQuestionListFlow.asSharedFlow()
+
+    private var triviaToken: String
+        set(value) = trivialSharedPreference.saveTriviaToken(value)
+        get() = trivialSharedPreference.loadTriviaToken()
 
 //    suspend fun getTriviaCategories() {
 //        downloadTriviaCategoryAndId()?.let { downloadedTriviaCategoryList ->
@@ -22,6 +34,30 @@ class TriviaRepo(private val openTriviaDatabaseDataSource: OpenTriviaDatabaseDat
 //            triviaCategoryListFlow.tryEmit(triviaCategoryList)
 //        }
 //    }
+
+    suspend fun getTriviaToken() {
+        when (val result = openTriviaDatabaseDataSource.getTriviaToken()) {
+            is DataSourceResult.Success -> {
+                result.data?.let { data ->
+                    if (data.code == TriviaResponseCode.Success.code) triviaToken = data.token
+                    else Log.d("myDebug", "get trivia token unSuccessful with code: ${TriviaResponseCode.values().find { it.code == data.code }}")
+                }
+            }
+            is DataSourceResult.Failure -> Log.d("myDebug", "getTriviaToken failed")
+        }
+    }
+
+    suspend fun resetTriviaToken() {
+        when (val result = openTriviaDatabaseDataSource.resetTriviaToken(triviaToken)) {
+            is DataSourceResult.Success -> {
+                result.data?.let { data ->
+                    if (data.code == TriviaResponseCode.Success.code) triviaToken = data.token
+                    else Log.d("myDebug", "get trivia token unSuccessful with code: ${TriviaResponseCode.values().find { it.code == data.code }}")
+                }
+            }
+            is DataSourceResult.Failure -> Log.d("myDebug", "resetTriviaToken failed")
+        }
+    }
 
     suspend fun getTriviaCategories(): List<TriviaCategory> {
         return when (val result = openTriviaDatabaseDataSource.getCategoriesAndIds()) {
@@ -37,26 +73,35 @@ class TriviaRepo(private val openTriviaDatabaseDataSource: OpenTriviaDatabaseDat
         }
     }
 
-    suspend fun getCategoryQuestions(category: String, amount: Int, difficulty: String, type: String): List<TriviaQuestions> {
-        val triviaCategory = triviaCategoryList.find { it.name == category } ?: TriviaCategory()
+    suspend fun getCategoryQuestions(category: String, amount: Int, difficulty: TriviaDifficulty?, type: TriviaType?) {
+        // get token if there's none
+        if (triviaToken.isBlank()) getTriviaToken()
 
-        return when (val result = openTriviaDatabaseDataSource.getCategoryQuestions(triviaCategory.id, amount, difficulty, type)) {
+        when (val result = openTriviaDatabaseDataSource.getCategoryQuestions(OpenTriviaQuestionQuery(triviaCategoryList.find { it.name == category }, amount, difficulty, type, triviaToken))) {
             is DataSourceResult.Success -> {
                 result.data?.let { data ->
-                    Log.d("myDebug", "download trivia questions response code: ${ResponseCode.values().find { it.code == data.code }}")
-                    data.results.map { result ->
-                        TriviaQuestions(
-                            question = result.question,
-                            wrongChoices = result.wrongAnswers,
-                            answer = result.correctAnswer
-                        )
+                    Log.d("myDebug", "download trivia questions response code: ${TriviaResponseCode.values().find { it.code == data.code }}")
+                    when (data.code) {
+                        TriviaResponseCode.Success.code -> {
+                            triviaQuestionListFlow.tryEmit(data.results.map { result ->
+                                TriviaQuestion(result.question, result.wrongAnswers, result.correctAnswer) }
+                            )
+                        }
+                        TriviaResponseCode.TokenNotFound.code,
+                        TriviaResponseCode.InvalidParameter.code -> {
+                            getTriviaToken()
+                            getCategoryQuestions(category, amount, difficulty, type)
+                        }
+                        TriviaResponseCode.NoResult.code,
+                        TriviaResponseCode.TokenEmpty.code -> {
+                            resetTriviaToken()
+                            getCategoryQuestions(category, amount, difficulty, type)
+                        }
+                        else -> Log.d("myDebug", "getCategoryQuestions Invalid response code")
                     }
-                } ?: emptyList()
+                }
             }
-            is DataSourceResult.Failure -> {
-                Log.d("myDebug", "downloadTriviaQuestions failed")
-                emptyList()
-            }
+            is DataSourceResult.Failure -> Log.d("myDebug", "downloadTriviaQuestions failed")
         }
     }
 
@@ -78,6 +123,8 @@ class TriviaRepo(private val openTriviaDatabaseDataSource: OpenTriviaDatabaseDat
 //            }
 //        }
 //    }
+
+    fun deleteTriviaToken() = trivialSharedPreference.deleteTriviaToken()
 }
 
 data class TriviaCategory(
@@ -85,7 +132,7 @@ data class TriviaCategory(
     val id: Int = 0,
 )
 
-data class TriviaQuestions(
+data class TriviaQuestion(
     val question: String = "",
     val wrongChoices: List<String> = emptyList(),
     val answer: String = ""
@@ -106,6 +153,6 @@ enum class TriviaType(val text: String, val query: String) {
     MultipleChoice("Multiple Choice", "multiple"), TrueFalse("True/False", "boolean")
 }
 
-enum class ResponseCode(val code: Int) {
-    Success(0), NoResults(1), InvalidParameter(2), TokenNotFound(3), TokenEmpty(4)
+enum class TriviaResponseCode(val code: Int) {
+    Success(0), NoResult(1), InvalidParameter(2), TokenNotFound(3), TokenEmpty(4)
 }

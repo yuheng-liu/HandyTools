@@ -7,7 +7,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_category_dropdown"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Select a category"
@@ -23,10 +23,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_amount_dropdown"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
+        android:layout_marginTop="@dimen/medium_layout_spacing"
         android:hint="Number of Questions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +40,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_difficulty_dropdown"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
+        android:layout_marginTop="@dimen/medium_layout_spacing"
         android:hint="Select Difficulty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,10 +57,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_type_dropdown"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
+        android:layout_marginTop="@dimen/medium_layout_spacing"
         android:hint="Select type of Questions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,10 +76,48 @@
         android:id="@+id/button_get_questions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_layout_spacing"
+        android:layout_marginTop="@dimen/large_layout_spacing"
         android:text="Get Trivia Questions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_type_dropdown"/>
+
+    <Button
+        android:id="@+id/button_get_token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minor_layout_spacing"
+        android:text="Get Trivia Token"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_reset_token"
+        app:layout_constraintTop_toBottomOf="@id/button_get_questions"/>
+
+    <Button
+        android:id="@+id/button_reset_token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minor_layout_spacing"
+        android:text="Reset Trivia Token"
+        app:layout_constraintStart_toEndOf="@id/button_get_token"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_get_questions"/>
+
+    <Button
+        android:id="@+id/button_delete_token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minor_layout_spacing"
+        android:backgroundTint="@color/red"
+        android:text="Delete Trivia Token"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_get_token"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_testing_buttons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:constraint_referenced_ids="button_get_token, button_reset_token, button_delete_token"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

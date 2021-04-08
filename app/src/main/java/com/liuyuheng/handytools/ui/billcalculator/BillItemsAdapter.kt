@@ -10,7 +10,7 @@ import com.liuyuheng.handytools.databinding.ListBillItemBinding
 import com.liuyuheng.handytools.repository.BillItem
 
 class BillItemsAdapter(
-    private val itemListener: (Int) -> Unit,
+    private val itemClickListener: (Int) -> Unit,
     private val onLongClickListener: (View, Int) -> Unit
 ): ListAdapter<BillItem, BillItemsAdapter.BillItemViewHolder>(BillsDiffCallback()) {
 
@@ -19,7 +19,7 @@ class BillItemsAdapter(
     }
 
     override fun onBindViewHolder(holder: BillItemViewHolder, position: Int) {
-        holder.bind(position, getItem(position), itemListener, onLongClickListener)
+        holder.bind(position, getItem(position), itemClickListener, onLongClickListener)
     }
 
     class BillItemViewHolder(private val binding: ListBillItemBinding): RecyclerView.ViewHolder(binding.root) {

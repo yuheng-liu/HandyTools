@@ -50,13 +50,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        mainActivitySharedViewModel.getApiStateLiveData().observe(this) { apiCallState ->
-            when (apiCallState) {
-                ApiCallState.Idle -> Log.d("myDebug", "api call state: IDLE")
-                ApiCallState.Waiting -> Log.d("myDebug", "api call state: WAITING")
-                ApiCallState.Completed -> Log.d("myDebug", "api call state: COMPLETED")
-            }
-        }
+//        mainActivitySharedViewModel.getApiStateLiveData().observe(this) { apiCallState ->
+//            when (apiCallState) {
+//                ApiCallState.Idle -> Log.d("myDebug", "api call state: IDLE")
+//                ApiCallState.Waiting -> Log.d("myDebug", "api call state: WAITING")
+//                ApiCallState.Completed -> Log.d("myDebug", "api call state: COMPLETED")
+//            }
+//        }
     }
 
     override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, binding.drawerLayout)

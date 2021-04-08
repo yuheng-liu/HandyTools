@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
+import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentTriviaBinding
+import com.liuyuheng.handytools.internal.navigate
 import com.liuyuheng.handytools.repository.TriviaDifficulty
 import com.liuyuheng.handytools.repository.TriviaType
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,10 +34,13 @@ class TriviaFragment: Fragment() {
     }
 
     private fun setupUi() {
-        val amountAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listOf(1..50))
+        val amountAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, (1..50).toList())
         val difficultyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaDifficulty.values().map { it.text })
         val typeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaType.values().map { it.text })
-        (binding.textInputLayoutAmountDropdown.editText as? AutoCompleteTextView)?.setAdapter(amountAdapter)
+        (binding.textInputLayoutAmountDropdown.editText as? AutoCompleteTextView)?.run {
+            setAdapter(amountAdapter)
+            setSelection(0)
+        }
         (binding.textInputLayoutDifficultyDropdown.editText as? AutoCompleteTextView)?.setAdapter(difficultyAdapter)
         (binding.textInputLayoutTypeDropdown.editText as? AutoCompleteTextView)?.setAdapter(typeAdapter)
     }
@@ -48,15 +53,17 @@ class TriviaFragment: Fragment() {
     }
 
     private fun setupListeners() {
+        binding.buttonGetToken.setOnClickListener { triviaViewModel.getTriviaToken() }
+        binding.buttonResetToken.setOnClickListener { triviaViewModel.resetTriviaToken() }
+        binding.buttonDeleteToken.setOnClickListener { triviaViewModel.deleteTriviaToken() }
         binding.buttonGetQuestions.setOnClickListener {
             val category = binding.textInputLayoutCategoryDropdown.editText?.text.toString()
-            val amount = binding.textInputLayoutAmountDropdown.editText?.text.toString().toInt()
-            val difficulty = TriviaDifficulty.valueOf(binding.textInputLayoutDifficultyDropdown.editText?.text.toString())
-            val type = TriviaType.valueOf(binding.textInputLayoutTypeDropdown.editText?.text.toString())
+            val amount = binding.textInputLayoutAmountDropdown.editText?.text.toString().toIntOrNull() ?: 1
+            val difficulty = TriviaDifficulty.values().find { it.text == binding.textInputLayoutDifficultyDropdown.editText?.text.toString() }
+            val type = TriviaType.values().find { it.text == binding.textInputLayoutTypeDropdown.editText?.text.toString() }
 
-            triviaViewModel.getCategoryQuestions(category, amount, difficulty, type).observe(viewLifecycleOwner) { triviaQuestions ->
-                Log.d("myDebug", "$triviaQuestions")
-            }
+            triviaViewModel.getCategoryQuestions(category, amount, difficulty, type)
+            navigate(R.id.action_triviaFragment_to_triviaQuestionDialogFragment)
         }
     }
 }
