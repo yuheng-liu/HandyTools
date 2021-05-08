@@ -26,16 +26,6 @@ abstract class BaseDataSource {
         }
     }
 
-    // Retrofit returns a ResponseBody class when failed, need to convert to a local model before use
-    private fun <T> convertErrorBody(errorBodyJson: String?) : T? {
-//        if (errorBodyJson != null) {
-//            val moshi = Moshi.Builder().build()
-//            val adapter: JsonAdapter<T> = moshi.adapter(T::class.java)
-//            return adapter.fromJson(errorBodyJson)
-//        }
-        return null
-    }
-
     /*
      * Error state handler
      */

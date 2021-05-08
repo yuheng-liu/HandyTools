@@ -62,7 +62,7 @@ class BillCalculatorRepo {
      * Full logic of calculating how much each person should pay or receive
      */
     fun getBillSplittingResult(): String {
-        val totalCosts = billsList.sumBy { (it.cost * 100).toInt() }
+        val totalCosts = billsList.sumOf { (it.cost * 100).toInt() }
         val numberOfPersons = nameListFlow.value.size
         val costPerPerson = totalCosts.div(numberOfPersons)
 
