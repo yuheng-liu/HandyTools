@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         tools:text="Choice 1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

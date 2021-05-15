@@ -1,6 +1,7 @@
 package com.liuyuheng.handytools.repository
 
 import android.util.Log
+import androidx.core.text.HtmlCompat
 import com.liuyuheng.handytools.network.datasource.DataSourceResult
 import com.liuyuheng.handytools.network.datasource.OpenTriviaDatabaseDataSource
 import com.liuyuheng.handytools.network.models.outgoing.OpenTriviaQuestionQuery
@@ -84,7 +85,10 @@ class TriviaRepo(
                     when (data.code) {
                         TriviaResponseCode.Success.code -> {
                             triviaQuestionListFlow.tryEmit(data.results.map { result ->
-                                TriviaQuestion(result.question, result.wrongAnswers, result.correctAnswer) }
+                                val decodedQuestion = HtmlCompat.fromHtml(result.question, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+                                val decodedWrongAnswers = result.wrongAnswers.map { HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY).toString() }
+                                val decodedCorrectAnswers = HtmlCompat.fromHtml(result.correctAnswer, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+                                TriviaQuestion(decodedQuestion, decodedWrongAnswers, decodedCorrectAnswers) }
                             )
                         }
                         TriviaResponseCode.TokenNotFound.code,
