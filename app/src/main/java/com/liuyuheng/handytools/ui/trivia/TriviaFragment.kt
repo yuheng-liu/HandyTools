@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
+import com.liuyuheng.common.extensions.observeOnce
 import com.liuyuheng.handytools.R
 import com.liuyuheng.handytools.databinding.FragmentTriviaBinding
 import com.liuyuheng.handytools.internal.navigate
@@ -64,6 +65,9 @@ class TriviaFragment: Fragment() {
 
             triviaViewModel.getCategoryQuestions(category, amount, difficulty, type)
             navigate(R.id.action_triviaFragment_to_triviaQuestionDialogFragment)
+            triviaViewModel.getTriviaQuestionListLiveData().observeOnce(viewLifecycleOwner) {
+
+            }
         }
     }
 }
