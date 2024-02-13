@@ -24,7 +24,7 @@ class TriviaQuestionDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObservers()
+//        setupObservers()
         setupListeners()
     }
 
@@ -36,19 +36,19 @@ class TriviaQuestionDialogFragment: DialogFragment() {
         dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun setupObservers() {
-        triviaViewModel.getTriviaQuestionListLiveData().observe(viewLifecycleOwner) { triviaQuestions ->
+//    private fun setupObservers() {
+//        triviaViewModel.getTriviaQuestionListLiveData().observe(viewLifecycleOwner) { triviaQuestions ->
             // TODO add dynamic handling for multiple questions, now only works for 1 question
 //            binding.textViewQuestion.text = triviaQuestions[0].question
 
-            val list = triviaQuestions[0].wrongChoices.map { TriviaAnswerChoices(it, false) }.toMutableList().apply {
-                add(TriviaAnswerChoices(triviaQuestions[0].answer, true))
-                shuffle()
-            }
+//            val list = triviaQuestions[0].wrongChoices.map { TriviaAnswerChoices(it, false) }.toMutableList().apply {
+//                add(TriviaAnswerChoices(triviaQuestions[0].answer, true))
+//                shuffle()
+//            }
 
 //            triviaAnswerChoicesAdapter.submitList(list.toList())
-        }
-    }
+//        }
+//    }
 
     private fun setupListeners() {
         binding.buttonNext.setOnClickListener {  }

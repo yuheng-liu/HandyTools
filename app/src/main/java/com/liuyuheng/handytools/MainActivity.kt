@@ -2,6 +2,8 @@ package com.liuyuheng.handytools
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -47,6 +49,14 @@ class MainActivity : AppCompatActivity() {
                 else -> true
             }
         }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    true -> binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    false -> onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
     }
 
     private fun setupObservers() {
@@ -60,11 +70,4 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp() = NavigationUI.navigateUp(navController, binding.drawerLayout)
-
-    override fun onBackPressed() {
-        when (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            true -> binding.drawerLayout.closeDrawer(GravityCompat.START)
-            false -> super.onBackPressed()
-        }
-    }
 }

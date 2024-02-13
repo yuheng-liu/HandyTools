@@ -80,6 +80,7 @@ class AddBillItemPersonDialogFragment: DialogFragment() {
                     billCalculatorViewModel.deleteCurrentItemPerson(fragmentState.billItemPerson)
                     dismiss()
                 }
+                else -> { }
             }
         }
         binding.buttonCancel.setOnClickListener { dismiss() }
