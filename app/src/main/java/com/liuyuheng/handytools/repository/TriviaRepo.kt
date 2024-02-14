@@ -81,7 +81,7 @@ class TriviaRepo(
         when (val result = openTriviaDatabaseDataSource.getCategoryQuestions(OpenTriviaQuestionQuery(triviaCategoryList.find { it.name == category }, amount, difficulty, type, triviaToken))) {
             is DataSourceResult.Success -> {
                 result.data?.let { data ->
-                    Log.d("myDebug", "download trivia questions response code: ${TriviaResponseCode.values().find { it.code == data.code }}")
+                    Log.d("myDebug", "download trivia questions response code: ${TriviaResponseCode.entries.find { it.code == data.code }}")
                     when (data.code) {
                         TriviaResponseCode.Success.code -> {
                             triviaQuestionListFlow.tryEmit(data.results.map { result ->

@@ -10,7 +10,7 @@ private const val OPEN_TRIVIAL_DATABASE_BASE_URL = "https://opentdb.com/"
 
 class RetrofitServiceBuilder(networkActivityInterceptor: NetworkActivityInterceptor) {
 
-    fun getOpenTriviaDatabaseApiService(): OpenTriviaDatabaseApiService = getRetrofitInstance(OPEN_TRIVIAL_DATABASE_BASE_URL, defaultClient).create(OpenTriviaDatabaseApiService::class.java)
+    fun getOpenTriviaDatabaseApiService(): OpenTriviaDatabaseApiService = getRetrofitInstance().create(OpenTriviaDatabaseApiService::class.java)
 
     // underlying http client used in retrofit instance
     private val defaultClient = OkHttpClient.Builder()
@@ -20,10 +20,10 @@ class RetrofitServiceBuilder(networkActivityInterceptor: NetworkActivityIntercep
         .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
         .build()
 
-    private fun getRetrofitInstance(baseUrl: String, client: OkHttpClient): Retrofit {
+    private fun getRetrofitInstance(): Retrofit {
         return Retrofit.Builder()
-            .client(client)
-            .baseUrl(baseUrl)
+            .client(defaultClient)
+            .baseUrl(OPEN_TRIVIAL_DATABASE_BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }

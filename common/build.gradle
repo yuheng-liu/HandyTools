@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     compileSdk rootProject.compileSdkVersion
@@ -35,7 +35,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktxVersion"
 
     // utils required dependencies
-    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+    ksp "com.github.bumptech.glide:ksp:$rootProject.glideVersion"
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 

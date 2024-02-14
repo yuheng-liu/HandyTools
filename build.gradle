@@ -13,7 +13,7 @@ buildscript {
         constraintLayoutVersion = '2.1.4'
         coroutinesVersion = '1.6.4'
         fragmentVersion = '1.6.2'
-        glideVersion = '4.11.0'
+        glideVersion = '4.14.2'
         gradleVersion = '3.6.1'
         kotlinVersion = '1.9.22'
         koinVersion = "2.2.2"
@@ -36,6 +36,10 @@ buildscript {
         classpath 'com.android.tools.build:gradle:8.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
+}
+
+plugins {
+    id "com.google.devtools.ksp" version "1.9.22-1.0.17" apply false
 }
 
 allprojects {

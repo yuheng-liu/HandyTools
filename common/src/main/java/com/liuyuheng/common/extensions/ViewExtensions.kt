@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.liuyuheng.common.internal.GlideApp
+import com.bumptech.glide.Glide
 
 fun View.visible() { visibility = View.VISIBLE }
 fun View.gone() { visibility = View.GONE }
@@ -61,7 +61,7 @@ fun TextView.setTextOrHide(textToSet: CharSequence?, visibilityWhenEmpty: Int = 
 }
 
 fun ImageView.loadWithGlide(imageId: Int) {
-    GlideApp.with(context)
+    Glide.with(context)
         .load(imageId)
         .into(this)
 }

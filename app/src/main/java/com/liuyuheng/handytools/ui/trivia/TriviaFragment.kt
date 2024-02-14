@@ -36,8 +36,8 @@ class TriviaFragment: Fragment() {
 
     private fun setupUi() {
         val amountAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, (1..50).toList())
-        val difficultyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaDifficulty.values().map { it.text })
-        val typeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaType.values().map { it.text })
+        val difficultyAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaDifficulty.entries.map { it.text })
+        val typeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, TriviaType.entries.map { it.text })
         (binding.textInputLayoutAmountDropdown.editText as? AutoCompleteTextView)?.run {
             setAdapter(amountAdapter)
             setSelection(0)
@@ -60,8 +60,8 @@ class TriviaFragment: Fragment() {
         binding.buttonGetQuestions.setOnClickListener {
             val category = binding.textInputLayoutCategoryDropdown.editText?.text.toString()
             val amount = binding.textInputLayoutAmountDropdown.editText?.text.toString().toIntOrNull() ?: 1
-            val difficulty = TriviaDifficulty.values().find { it.text == binding.textInputLayoutDifficultyDropdown.editText?.text.toString() }
-            val type = TriviaType.values().find { it.text == binding.textInputLayoutTypeDropdown.editText?.text.toString() }
+            val difficulty = TriviaDifficulty.entries.find { it.text == binding.textInputLayoutDifficultyDropdown.editText?.text.toString() }
+            val type = TriviaType.entries.find { it.text == binding.textInputLayoutTypeDropdown.editText?.text.toString() }
 
             triviaViewModel.getCategoryQuestions(category, amount, difficulty, type)
             navigate(R.id.action_triviaFragment_to_triviaQuestionDialogFragment)

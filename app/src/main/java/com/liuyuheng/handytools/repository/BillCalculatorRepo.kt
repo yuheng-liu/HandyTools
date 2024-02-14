@@ -87,8 +87,7 @@ class BillCalculatorRepo {
         return when {
             difAmount > 0 -> "receives $${String.format("%.2f", (difAmount.absoluteValue/100.0).round(2))}\n"
             difAmount == 0 -> "breaks even\n"
-            difAmount < 0 -> "pays $${String.format("%.2f", (difAmount.absoluteValue/100.0).round(2))}\n"
-            else -> ""
+            else -> "pays $${String.format("%.2f", (difAmount.absoluteValue/100.0).round(2))}\n"
         }
     }
 }
